@@ -1,44 +1,138 @@
-<!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CDC Dabas Ingatlaniroda</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
-:root{--g:#12372f;--g2:#1d5145;--gold:#c7a35a;--cream:#f6f2e9;--ink:#17211e;--muted:#68736f;--line:#e6e0d4}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"DM Sans",Arial;color:var(--ink)}a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit}
-.top{background:var(--g);color:#fff;font-size:13px}.top div,.navin,.wrap{max-width:1180px;margin:auto}.top div{padding:9px 22px;display:flex;justify-content:space-between}.nav{position:sticky;top:0;z-index:5;background:#fffffff2;border-bottom:1px solid var(--line)}.navin{padding:16px 22px;display:flex;align-items:center;gap:28px}.logo{font-weight:800;letter-spacing:.08em;color:var(--g)}.logo span{color:var(--gold)}.links{display:flex;gap:25px;margin-left:auto;font-size:14px}.navbtn,.btn{border:0;border-radius:10px;padding:12px 18px;font-weight:700;cursor:pointer}.navbtn{background:var(--g);color:#fff}
+:root{--g:#12372f;--g2:#1d5145;--gold:#c7a35a;--cream:#f6f2e9;--ink:#17211e;--muted:#68736f;--line:#e6e0d4}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"DM Sans",Arial;color:var(--ink)}a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit}
+.top{background:var(--g);color:#fff;font-size:13px}.top div,.navin,.wrap{max-width:1180px;margin:auto}.top div{padding:9px 22px;display:flex;justify-content:space-between}
+.nav{position:sticky;top:0;z-index:5;background:#fffffff2;border-bottom:1px solid var(--line)}.navin{padding:16px 22px;display:flex;align-items:center;gap:28px}.logo{font-weight:800;letter-spacing:.08em;color:var(--g)}.logo span{color:var(--gold)}.links{display:flex;gap:25px;margin-left:auto;font-size:14px}.navbtn,.btn{border:0;border-radius:10px;padding:12px 18px;font-weight:700;cursor:pointer}.navbtn{background:var(--g);color:#fff}
 .hero{background:linear-gradient(120deg,#12372ff5,#12372fc9);color:#fff}.hero .wrap{padding:85px 22px;display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:#e4ca8e}.hero h1{font:700 58px/1.04 "Playfair Display",serif;margin:15px 0}.hero p{font-size:18px;line-height:1.65;color:#e7eeeb}.actions{display:flex;gap:12px;margin-top:28px}.gold{background:var(--gold);color:#17362e}.light{background:#ffffff18;color:#fff;border:1px solid #ffffff45}.search{background:#fff;color:var(--ink);padding:22px;border-radius:18px}.search h2{font:700 25px "Playfair Display";margin:0 0 15px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:11px;color:var(--muted);font-weight:700}.field input,.field select,.field textarea{border:1px solid var(--line);padding:11px;border-radius:9px;background:#fff}.full{grid-column:1/-1}.search .btn{width:100%;margin-top:10px}
-section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{font:700 40px "Playfair Display";margin:5px 0}.muted{color:var(--muted)}.cards{max-width:1180px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 8px 28px #0000000b}.photo{height:200px;background:linear-gradient(135deg,#2f5b50,#d5bd86);position:relative}.badge{position:absolute;left:14px;top:14px;background:#fff;color:var(--g);padding:7px 10px;border-radius:8px;font-size:11px;font-weight:800}.body{padding:18px}.body h3{margin:0 0 5px}.price{font-size:21px;font-weight:800;color:var(--g);margin:12px 0}.meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-bottom:14px}.details{display:block;text-align:center;background:var(--g);color:#fff;padding:11px;border-radius:9px;font-weight:700;font-size:13px}.band{background:var(--cream)}.services{max-width:1180px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.service{background:#fff;border:1px solid var(--line);border-radius:15px;padding:25px}.icon{font-size:24px}.service h3{margin:12px 0 8px}.service p{color:var(--muted);line-height:1.6;font-size:14px}.about,.contact{max-width:1180px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:35px}.aboutbox{background:var(--g);color:#fff;border-radius:22px;padding:40px}.aboutbox h2{font:700 38px "Playfair Display";margin-top:0}.aboutbox p{line-height:1.7;color:#dce7e3}.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fact{border:1px solid #ffffff30;padding:14px;border-radius:10px}.fact strong{display:block;color:#e4ca8e}.contactbox,.form{background:var(--cream);padding:30px;border-radius:18px}.form{background:#fff;border:1px solid var(--line)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.footer{background:#0d2a24;color:#dce7e3;padding:30px 22px}.footer div{max-width:1180px;margin:auto}
-.modal{position:fixed;inset:0;background:#0b201dcc;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal.open{display:flex}.modalbox{background:#fff;border-radius:18px;max-width:700px;width:100%;padding:28px}.close{float:right;border:0;border-radius:50%;width:34px;height:34px;cursor:pointer}
-@media(max-width:850px){.links{display:none}.hero .wrap,.about,.contact{grid-template-columns:1fr}.cards,.services{grid-template-columns:1fr 1fr}.hero h1{font-size:45px}}@media(max-width:560px){.top{display:none}.cards,.services,.grid,.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.hero .wrap{padding:55px 18px}.hero h1{font-size:39px}.navin{padding:13px 18px}}
-</style></head><body>
+section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{font:700 40px "Playfair Display";margin:5px 0}.muted{color:var(--muted)}
+.cards{max-width:1180px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 8px 28px #0000000b}.photo{height:200px;background:linear-gradient(135deg,#2f5b50,#d5bd86);position:relative;background-size:cover;background-position:center}.badge{position:absolute;left:14px;top:14px;background:#fff;color:var(--g);padding:7px 10px;border-radius:8px;font-size:11px;font-weight:800}.body{padding:18px}.body h3{margin:0 0 5px}.price{font-size:21px;font-weight:800;color:var(--g);margin:12px 0}.meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-bottom:14px}.details{display:block;text-align:center;background:var(--g);color:#fff;padding:11px;border-radius:9px;font-weight:700;font-size:13px}
+.band{background:var(--cream)}.services{max-width:1180px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.service{background:#fff;border:1px solid var(--line);border-radius:15px;padding:25px}.icon{font-size:24px}.service h3{margin:12px 0 8px}.service p{color:var(--muted);line-height:1.6;font-size:14px}.about,.contact{max-width:1180px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:35px}.aboutbox{background:var(--g);color:#fff;border-radius:22px;padding:40px}.aboutbox h2{font:700 38px "Playfair Display";margin-top:0}.aboutbox p{line-height:1.7;color:#dce7e3}.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fact{border:1px solid #ffffff30;padding:14px;border-radius:10px}.fact strong{display:block;color:#e4ca8e}.contactbox,.form{background:var(--cream);padding:30px;border-radius:18px}.form{background:#fff;border:1px solid var(--line)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.footer{background:#0d2a24;color:#dce7e3;padding:30px 22px}.footer div{max-width:1180px;margin:auto}
+
+/* Profi ingatlan adatlap */
+.modal{position:fixed;inset:0;background:#0b201dcc;display:none;align-items:center;justify-content:center;padding:18px;z-index:20;overflow:auto}.modal.open{display:flex}
+.modalbox{background:#fff;border-radius:24px;max-width:1080px;width:100%;max-height:94vh;overflow:auto;box-shadow:0 30px 80px #0004}.modalclose{position:absolute;right:20px;top:20px;border:0;background:#fff;width:44px;height:44px;border-radius:50%;font-size:24px;cursor:pointer;z-index:4;box-shadow:0 4px 18px #0002}
+.detail-gallery{padding:18px 18px 0}.main-photo{height:430px;border-radius:18px;background:linear-gradient(135deg,#2f5b50,#d5bd86) center/cover;position:relative;overflow:hidden}.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border:0;border-radius:50%;background:#fffdd;color:var(--g);font-size:25px;cursor:pointer;box-shadow:0 4px 18px #0002}.gallery-arrow.prev{left:16px}.gallery-arrow.next{right:16px}.photo-count{position:absolute;right:16px;bottom:16px;background:#102f28dd;color:#fff;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:700}.thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 2px 2px}.thumb{flex:0 0 78px;height:58px;border-radius:8px;border:2px solid transparent;background-size:cover;background-position:center;cursor:pointer}.thumb.active{border-color:var(--gold)}
+.detail-content{padding:20px 36px 34px}.detail-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.detail-content h2{font:700 40px/1.1 "Playfair Display";margin:7px 0}.detail-price{font-size:29px;font-weight:800;color:var(--g);white-space:nowrap}.detail-meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:15px;margin:16px 0 26px}.detail-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:24px 0;padding:18px 0}.stat{padding:0 16px;border-right:1px solid var(--line)}.stat:first-child{padding-left:0}.stat:last-child{border-right:0}.stat strong{display:block;font-size:18px;color:var(--g);margin-top:4px}.stat span{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.detail-section{margin-top:30px}.detail-section h3{font:700 25px "Playfair Display";margin:0 0 12px}.description{line-height:1.8;color:#42504b;white-space:pre-line}.plan{width:100%;max-height:600px;object-fit:contain;border:1px solid var(--line);border-radius:14px;background:#faf9f5}.detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.detail-actions .btn{display:inline-block}.map-link{background:var(--g);color:#fff}.interest{background:var(--gold);color:#17362e}
+@media(max-width:850px){.links{display:none}.hero .wrap,.about,.contact{grid-template-columns:1fr}.cards,.services{grid-template-columns:1fr 1fr}.hero h1{font-size:45px}.detail-top{flex-direction:column}.detail-price{white-space:normal}.main-photo{height:340px}.detail-stats{grid-template-columns:1fr 1fr;gap:16px}.stat:nth-child(2){border-right:0}}
+@media(max-width:560px){.top{display:none}.cards,.services,.grid,.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.hero .wrap{padding:55px 18px}.hero h1{font-size:39px}.navin{padding:13px 18px}.modal{padding:0}.modalbox{max-height:100vh;border-radius:0}.detail-gallery{padding:10px}.main-photo{height:260px;border-radius:12px}.detail-content{padding:18px 20px 28px}.detail-content h2{font-size:32px}.detail-stats{grid-template-columns:1fr 1fr}.stat{border-right:0!important;border-bottom:1px solid var(--line);padding:8px 0}.stat:last-child{border-bottom:0}}
+</style>
+</head>
+<body>
 <div class="top"><div><span>CDC Dabas Ingatlaniroda</span><span>2370 Dabas, Bartók Béla utca 47. · (29) 361-049 · (70) 977-7820</span></div></div>
 <header class="nav"><div class="navin"><a class="logo" href="#">CDC <span>DABAS</span></a><nav class="links"><a href="#ingatlanok">Ingatlanok</a><a href="#szolgaltatasok">Szolgáltatások</a><a href="#rolunk">Rólunk</a><a href="#kapcsolat">Kapcsolat</a></nav><a class="navbtn" href="#kapcsolat">Ingatlant adok el</a></div></header>
+
 <section class="hero"><div class="wrap"><div><div class="eyebrow">CDC Dabas Ingatlaniroda</div><h1>Találjuk meg együtt a következő otthonát.</h1><p>Eladó és kiadó ingatlanok Dabas és környékén, személyes figyelemmel és egy országos hálózat hátterével.</p><div class="actions"><a class="btn gold" href="#ingatlanok">Ingatlanok keresése</a><a class="btn light" href="#kapcsolat">Beszéljünk</a></div></div>
-<div class="search"><h2>Keressen ingatlant</h2><div class="grid"><div class="field"><label>Ügylet</label><select id="deal"><option value="">Mindegy</option><option>Eladó</option><option>Kiadó</option></select></div><div class="field"><label>Típus</label><select id="type"><option value="">Mindegy</option><option>Családi ház</option><option>Lakás</option><option>Telek</option><option>Üzleti</option></select></div><div class="field full"><label>Helyszín vagy kulcsszó</label><input id="q" placeholder="pl. Dabas, családi ház..."></div></div><button class="btn gold" onclick="filter()">Keresés</button></div></div></section>
+<div class="search"><h2>Keressen ingatlant</h2><div class="grid"><div class="field"><label>Ügylet</label><select id="deal"><option value="">Mindegy</option><option>Eladó</option><option>Kiadó</option></select></div><div class="field"><label>Típus</label><select id="type"><option value="">Mindegy</option><option>Családi ház</option><option>Tégla lakás</option><option>Panel lakás</option><option>Ikerház</option><option>Telek</option><option>Üzleti</option></select></div><div class="field full"><label>Helyszín vagy kulcsszó</label><input id="q" placeholder="pl. Dabas, családi ház..."></div></div><button class="btn gold" onclick="filter()">Keresés</button></div></div></section>
+
 <section id="ingatlanok"><div class="head"><div class="eyebrow" style="color:var(--gold)">Kínálatunk</div><h2>Aktuális ingatlanok</h2><div class="muted">Kiemelt lehetőségek a kínálatból.</div></div><div class="cards" id="cards"></div></section>
+
 <section class="band" id="szolgaltatasok"><div class="head"><div class="eyebrow" style="color:var(--gold)">A teljes folyamatban</div><h2>Nem csak hirdetünk.</h2></div><div class="services"><div class="service"><div class="icon">⌂</div><h3>Értékesítés</h3><p>Az ingatlan bemutatásától a megfelelő érdeklődők kezelésén át a szerződéskötésig támogatjuk a folyamatot.</p></div><div class="service"><div class="icon">⌕</div><h3>Vásárlás és keresés</h3><p>Segítünk leszűkíteni a lehetőségeket, egyeztetni a megtekintéseket és végigvinni a vásárlási folyamatot.</p></div><div class="service"><div class="icon">▣</div><h3>Kiadás és bérlés</h3><p>Lakó- és üzleti ingatlanok esetén is támogatjuk a megfelelő bérlő vagy ingatlan megtalálását.</p></div></div></section>
+
 <section id="rolunk"><div class="about"><div><div class="eyebrow" style="color:var(--gold)">Helyismeret + hálózat</div><h2 style="font:700 42px 'Playfair Display'">Helyben vagyunk. Ismerjük a környéket.</h2><p class="muted" style="line-height:1.8">A CDC Dabas Ingatlaniroda a Bartók Béla utcában várja ügyfeleit. A helyi ismereteket egy országos ingatlanközvetítő hálózat kínálatával és hátterével kapcsoljuk össze.</p></div><div class="aboutbox"><h2>Egy ingatlanügylet több, mint egy hirdetés.</h2><p>A kapcsolatfelvételtől az egyeztetéseken és megtekintéseken át a lezárásig egy folyamatként kezeljük az ügyet.</p><div class="facts"><div class="fact"><strong>Helyben</strong>Dabas és környéke</div><div class="fact"><strong>Teljes folyamat</strong>Értékesítés · vásárlás · bérlés</div></div></div></div></section>
+
 <section class="band" id="kapcsolat"><div class="head"><div class="eyebrow" style="color:var(--gold)">Kapcsolat</div><h2>Beszéljünk az ingatlanról.</h2></div><div class="contact"><div class="contactbox"><h3>CDC Dabas Ingatlaniroda</h3><p>📍 2370 Dabas, Bartók Béla utca 47.</p><p>☎ <a href="tel:+3629361049">(29) 361-049</a></p><p>📱 <a href="tel:+36709777820">(70) 977-7820</a></p><p>✉ <a href="mailto:dabas@cdci.hu">dabas@cdci.hu</a></p><p>🕘 H–P 9:00–18:00 · Szo 9:00–12:00</p></div><form class="form" onsubmit="send(event)"><div class="formgrid"><div class="field"><label>Név</label><input required></div><div class="field"><label>Telefon</label><input required></div><div class="field"><label>E-mail</label><input type="email" required></div><div class="field"><label>Érdeklődés</label><select><option>Ingatlant keresek</option><option>Ingatlant értékesítenék</option><option>Kiadnám az ingatlant</option><option>Egyéb</option></select></div><div class="field full"><label>Üzenet</label><textarea rows="5"></textarea></div></div><button class="btn gold" type="submit">Kapcsolatfelvétel küldése</button></form></div></section>
 <footer class="footer"><div>© 2026 CDC Dabas Ingatlaniroda</div></footer>
-<div class="modal" id="modal"><div class="modalbox"><button class="close" onclick="closeM()">×</button><div id="mc"></div></div></div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeM()">
+  <div class="modalbox">
+    <button class="modalclose" onclick="closeM()" aria-label="Bezárás">×</button>
+    <div id="mc"></div>
+  </div>
+</div>
+
 <script>
-let P=[];
+let P=[], currentDetail=null, currentPhoto=0;
 const F=n=>new Intl.NumberFormat("hu-HU").format(Number(n||0))+" Ft";
 const escapeHtml=s=>String(s??"").replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const safeUrl=s=>String(s||"").replace(/"/g,"%22");
+
 function render(x=P){
   const cards=document.getElementById("cards");
   if(!x.length){cards.innerHTML='<p class="muted">A keresésnek megfelelő ingatlant most nem találtunk.</p>';return;}
-  cards.innerHTML=x.map((p,i)=>`<article class="card"><div class="photo" style="${p.photo?`background-image:url('${p.photo}');background-size:cover;background-position:center`:''}"><span class="badge">${escapeHtml(p.featured?'Kiemelt':(p.deal||'Eladó'))}</span></div><div class="body"><h3>${escapeHtml(p.title)}</h3><div class="muted">${escapeHtml(p.city)} · ${escapeHtml(p.type)}</div><div class="price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div><div class="meta"><span>${p.area||'–'} m²</span>${p.lot?`<span>${p.lot} m² telek</span>`:''}${p.rooms?`<span>${p.rooms} szoba</span>`:''}</div><a class="details" href="#" onclick="openM(${i});return false">Részletek</a></div></article>`).join("");
+  cards.innerHTML=x.map((p,i)=>`<article class="card">
+    <div class="photo" style="${p.photo?`background-image:url('${safeUrl(p.photo)}')`:''}">
+      <span class="badge">${escapeHtml(p.featured?'Kiemelt':(p.deal||'Eladó'))}</span>
+    </div>
+    <div class="body">
+      <h3>${escapeHtml(p.title)}</h3>
+      <div class="muted">${escapeHtml(p.city)} · ${escapeHtml(p.type)}</div>
+      <div class="price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div>
+      <div class="meta"><span>${p.area||'–'} m²</span>${p.lot?`<span>${p.lot} m² telek</span>`:''}${p.rooms?`<span>${p.rooms} szoba</span>`:''}</div>
+      <a class="details" href="#" onclick="openM(${i});return false">Részletes adatlap</a>
+    </div>
+  </article>`).join("");
 }
+
 function filter(){
   const d=document.getElementById("deal").value,t=document.getElementById("type").value,q=document.getElementById("q").value.toLowerCase().trim();
-  render(P.filter(p=>(!d||p.deal===d)&&(!t||p.type===t)&&(!q||(`${p.city} ${p.title} ${p.type} ${p.description}`).toLowerCase().includes(q))));
+  const results=P.filter(p=>(!d||p.deal===d)&&(!t||p.type===t)&&(!q||(`${p.city} ${p.title} ${p.type} ${p.description}`).toLowerCase().includes(q)));
+  render(results);
+  document.getElementById("ingatlanok").scrollIntoView({behavior:"smooth", block:"start"});
 }
+
+function detailStats(p){
+  const items=[
+    [p.area?`${p.area} m²`:"–","Alapterület"],
+    [p.rooms?`${p.rooms} szoba`:"–","Szobák"],
+    [p.bathrooms?`${p.bathrooms}`:"–","Fürdőszoba"],
+    [p.lot?`${p.lot} m²`:"–","Telekméret"]
+  ];
+  return `<div class="detail-stats">${items.map(x=>`<div class="stat"><span>${x[1]}</span><strong>${escapeHtml(x[0])}</strong></div>`).join("")}</div>`;
+}
+
+function gallery(p){
+  const photos=(p.photos||[]).filter(Boolean);
+  if(!photos.length) return `<div class="main-photo"></div>`;
+  const src=photos[currentPhoto]||photos[0];
+  const thumbs=photos.length>1?`<div class="thumbs">${photos.map((url,i)=>`<button class="thumb ${i===currentPhoto?'active':''}" style="background-image:url('${safeUrl(url)}')" aria-label="Fotó ${i+1}" onclick="setPhoto(${i})"></button>`).join("")}</div>`:"";
+  return `<div class="main-photo" style="background-image:url('${safeUrl(src)}')">
+    ${photos.length>1?`<button class="gallery-arrow prev" onclick="changePhoto(-1)" aria-label="Előző fotó">‹</button><button class="gallery-arrow next" onclick="changePhoto(1)" aria-label="Következő fotó">›</button><div class="photo-count">${currentPhoto+1} / ${photos.length}</div>`:""}
+  </div>${thumbs}`;
+}
+
 function openM(i){
   const p=P[i];
-  const photo=p.photo?`<div style="height:230px;border-radius:14px;background:url('${p.photo}') center/cover;margin-bottom:20px"></div>`:'';
-  document.getElementById("mc").innerHTML=`${photo}<div class="eyebrow" style="color:var(--gold)">${escapeHtml(p.deal)} · ${escapeHtml(p.type)}</div><h2>${escapeHtml(p.title)}</h2><p class="muted">${escapeHtml(p.city)} · ${p.area||'–'} m² ${p.lot?`· ${p.lot} m² telek`:''} ${p.rooms?`· ${p.rooms} szoba`:''}</p><div class="price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div><p style="line-height:1.8">${escapeHtml(p.description)}</p>${p.map?`<a class="btn" style="background:var(--g);color:#fff;margin-right:8px" href="${escapeHtml(p.map)}" target="_blank" rel="noopener">Térkép</a>`:''}<a class="btn" style="background:var(--g);color:#fff" href="#kapcsolat" onclick="closeM()">Érdekel</a>`;
+  currentDetail=p; currentPhoto=0;
+  renderDetail();
   document.getElementById("modal").classList.add("open");
+  document.body.style.overflow="hidden";
 }
-function closeM(){document.getElementById("modal").classList.remove("open")}
+
+function renderDetail(){
+  const p=currentDetail;
+  const plan=p.floorplan?`<div class="detail-section"><h3>Alaprajz</h3><img class="plan" src="${safeUrl(p.floorplan)}" alt="Az ingatlan alaprajza"></div>`:"";
+  const map=p.map?`<div class="detail-actions"><a class="btn map-link" href="${escapeHtml(p.map)}" target="_blank" rel="noopener">📍 Megnyitás térképen</a><a class="btn interest" href="#kapcsolat" onclick="closeM()">Érdekel az ingatlan</a></div>`:`<div class="detail-actions"><a class="btn interest" href="#kapcsolat" onclick="closeM()">Érdekel az ingatlan</a></div>`;
+  document.getElementById("mc").innerHTML=`
+    <div class="detail-gallery">${gallery(p)}</div>
+    <div class="detail-content">
+      <div class="eyebrow" style="color:var(--gold)">${escapeHtml(p.deal)} · ${escapeHtml(p.type)}</div>
+      <div class="detail-top"><div><h2>${escapeHtml(p.title)}</h2><div class="detail-meta">${escapeHtml(p.city)}${p.ingatlanId?` · ID: ${escapeHtml(p.ingatlanId)}`:""}</div></div><div class="detail-price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div></div>
+      ${detailStats(p)}
+      <div class="detail-section"><h3>Az ingatlanról</h3><div class="description">${escapeHtml(p.description||"További részletek hamarosan.")}</div></div>
+      ${plan}
+      ${map}
+    </div>`;
+}
+
+function setPhoto(i){currentPhoto=i;renderDetail()}
+function changePhoto(delta){
+  const n=(currentDetail?.photos||[]).length;
+  if(!n)return;
+  currentPhoto=(currentPhoto+delta+n)%n;
+  renderDetail();
+}
+
+function closeM(){document.getElementById("modal").classList.remove("open");document.body.style.overflow=""}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM();if(document.getElementById("modal").classList.contains("open")&&currentDetail?.photos?.length){if(e.key==="ArrowLeft")changePhoto(-1);if(e.key==="ArrowRight")changePhoto(1)}});
+
 async function loadProperties(){
   const cards=document.getElementById("cards");
   cards.innerHTML='<p class="muted">Ingatlanok betöltése…</p>';
@@ -53,9 +147,8 @@ async function loadProperties(){
     cards.innerHTML='<p class="muted">Az ingatlanok jelenleg nem tölthetők be. A kapcsolatfelvétel továbbra is elérhető.</p>';
   }
 }
-function send(e){
-  e.preventDefault();
-  alert("A kapcsolatfelvételi űrlap következő lépésként közvetlenül az érdeklődők CRM-ébe kerül.");
-}
+function send(e){e.preventDefault();alert("A kapcsolatfelvételi űrlap következő lépésként közvetlenül az érdeklődők CRM-ébe kerül.");}
 loadProperties();
-</script></body></html>
+</script>
+</body>
+</html>
