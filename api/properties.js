@@ -57,7 +57,7 @@ export default async function handler(req, res) {
           type: f['Ingatlantípus'] || '',
           deal: f['Eladó / Kiadó'] || '',
           price: Number(f['Ár'] || 0),
-          area: Number(f['Négyzetméter'] || 0),
+          area: Number(f['Négyzetméter'] ?? f['Alapterület'] ?? f['Alapterület (m²)'] ?? 0),
           lot: Number(f['Telekméret'] || 0),
           rooms: Number(f['Szobák száma'] || 0),
           bathrooms: Number(f['Fürdőszobák száma'] || 0),
