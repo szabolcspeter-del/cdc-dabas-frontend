@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   }
 
   const token = process.env.AIRTABLE_TOKEN;
-  const baseId = process.env.AIRTABLE_BASE_ID || 'appBXDnRigFAlvCv';
+  const baseId = process.env.AIRTABLE_BASE_ID || 'appBXDnRligFAIvCv';
   const table = process.env.AIRTABLE_PROPERTIES_TABLE || 'tblNJ5etsbiMWAnMZ';
 
   if (!token) {
@@ -12,19 +12,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    // First fetch the table without filterByFormula.
-    // This removes the formula as a possible source of the Airtable error.
     const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}?pageSize=100`;
-
     const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
+      headers: { Authorization: `Bearer ${token}` }
     });
 
     const data = await response.json();
-
     if (!response.ok) {
       return res.status(response.status).json({
         error: 'Airtable request failed',
@@ -35,16 +28,6 @@ export default async function handler(req, res) {
     }
 
     const records = data.records || [];
-
-    const pick = (fields, names) => {
-      for (const name of names) {
-        if (fields[name] !== undefined && fields[name] !== null && fields[name] !== '') {
-          return fields[name];
-        }
-      }
-      return null;
-    };
-
     const properties = records
       .filter(record => {
         const f = record.fields || {};
@@ -54,35 +37,43 @@ export default async function handler(req, res) {
       })
       .map(record => {
         const f = record.fields || {};
-        const photos = pick(f, ['Fotók', 'Fotok', 'Képek', 'Képek / Fotók']);
+        const photos = Array.isArray(f['Fotók'])
+          ? f['Fotók'].map(x => x.url || x.thumbnails?.large?.url).filter(Boolean)
+          : [];
+
+        let floorplan = null;
+        const rawPlan = f['Alaprajz'];
+        if (Array.isArray(rawPlan) && rawPlan.length) {
+          floorplan = rawPlan[0]?.url || rawPlan[0]?.thumbnails?.large?.url || null;
+        } else if (rawPlan && typeof rawPlan === 'string') {
+          floorplan = rawPlan;
+        }
 
         return {
           id: record.id,
-          ingatlanId: pick(f, ['Ingatlan ID', 'IngatlanID']),
-          title: pick(f, ['Cím', 'Megnevezés']) || 'Ingatlan',
-          city: pick(f, ['Település', 'Város']) || '',
-          type: pick(f, ['Ingatlantípus', 'Típus']) || '',
-          deal: pick(f, ['Eladó / Kiadó', 'Ügylet']) || '',
-          price: Number(pick(f, ['Ár', 'Ar']) || 0),
-          area: Number(pick(f, ['Négyzetméter', 'Alapterület']) || 0),
-          lot: Number(pick(f, ['Telekméret', 'Telekméret (m²)']) || 0),
-          rooms: Number(pick(f, ['Szobák száma', 'Szobák']) || 0) || null,
-          bathrooms: Number(pick(f, ['Fürdőszobák száma', 'Fürdőszobák']) || 0) || null,
-          description: pick(f, ['Leírás', 'Leiras']) || '',
-          map: pick(f, ['Helyszín / térkép', 'Helyszín', 'Térkép']) || '',
-          featured: Boolean(pick(f, ['Kiemelt ingatlan', 'Kiemelt'])),
-          photos: Array.isArray(photos) ? photos.map(x => x.url).filter(Boolean) : []
+          ingatlanId: f['Ingatlan ID'] ?? null,
+          title: f['Cím'] || '',
+          city: f['Település'] || '',
+          type: f['Ingatlantípus'] || '',
+          deal: f['Eladó / Kiadó'] || '',
+          price: Number(f['Ár'] || 0),
+          area: Number(f['Négyzetméter'] || 0),
+          lot: Number(f['Telekméret'] || 0),
+          rooms: Number(f['Szobák száma'] || 0),
+          bathrooms: Number(f['Fürdőszobák száma'] || 0),
+          description: f['Leírás'] || '',
+          photos,
+          floorplan,
+          map: f['Helyszín / térkép'] || '',
+          featured: f['Kiemelt ingatlan'] === true
         };
       });
 
-    return res.status(200).json({
-      properties,
-      totalRecords: records.length
-    });
+    return res.status(200).json({ properties, totalRecords: records.length });
   } catch (error) {
     return res.status(500).json({
-      error: 'Server error',
-      message: error.message || 'Unknown server error'
+      error: 'Internal server error',
+      message: error.message
     });
   }
 }
