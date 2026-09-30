@@ -1,10 +1,5 @@
 export default async function handler(req, res) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const token = process.env.AIRTABLE_TOKEN; 
-  const baseId = process.env.AIRTABLE_BASE_ID || 'appBXDnRigFAlCv7c';
+  const token = process.env.AIRTABLE_TOKEN;
 
   if (!token) {
     return res.status(500).json({
@@ -13,19 +8,49 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = `https://api.airtable.com/v0/appBXDnRigFAlvCv/Ingatlanok?pageSize=1`;
-
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
+    // 1. Lekérjük az API által ténylegesen látható base-eket
+    const basesResponse = await fetch(
+      'https://api.airtable.com/v0/meta/bases',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
-    });
+    );
 
-    const data = await response.json();
+    const basesData = await basesResponse.json();
 
-    return res.status(response.status).json({
-      airtableStatus: response.status,
-      airtableResponse: data
+    if (!basesResponse.ok) {
+      return res.status(basesResponse.status).json({
+        step: 'list-bases',
+        airtable: basesData
+      });
+    }
+
+    const base = basesData.bases?.[0];
+
+    if (!base) {
+      return res.status(404).json({
+        error: 'No bases visible to this token'
+      });
+    }
+
+    // 2. AZ AIRTABLE ÁLTAL VISSZAADOTT ID-t használjuk
+    const tablesResponse = await fetch(
+      `https://api.airtable.com/v0/meta/bases/${base.id}/tables`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const tablesData = await tablesResponse.json();
+
+    return res.status(tablesResponse.status).json({
+      baseFromApi: base,
+      tablesStatus: tablesResponse.status,
+      tables: tablesData
     });
 
   } catch (error) {
