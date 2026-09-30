@@ -1,0 +1,1 @@
+CDC Dabas frontend v1 – működő statikus prototípus. Következő lépés: Airtable/Softr CRM összekötés, valódi fotók, valódi űrlap, SEO és jogi oldalak.
