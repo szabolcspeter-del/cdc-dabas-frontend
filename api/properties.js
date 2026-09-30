@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   const token = process.env.AIRTABLE_TOKEN;
   const baseId = process.env.AIRTABLE_BASE_ID || 'appBXDnRigFAlvCv';
-  const table = process.env.AIRTABLE_PROPERTIES_TABLE || 'Ingatlanok';
+  const table = process.env.AIRTABLE_PROPERTIES_TABLE || 'tblNJ5etsbiMWAnMZ';
 
   if (!token) {
     return res.status(500).json({ error: 'AIRTABLE_TOKEN is not configured' });
