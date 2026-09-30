@@ -70,7 +70,25 @@ export default async function handler(req, res) {
           photos,
           floorplan,
           map: f['Helyszín / térkép'] || '',
-          featured: f['Kiemelt ingatlan'] === true
+          featured: f['Kiemelt ingatlan'] === true,
+          extra: {
+            "Ingatlan állapota": f['Ingatlan állapota'],
+            "Építés éve": f['Építés éve'],
+            "Komfort": f['Komfort'],
+            "Emelet": f['Emelet'],
+            "Épület szintjei": f['Épület szintjei'],
+            "Lift": f['Lift'],
+            "Belmagasság": f['Belmagasság'],
+            "Légkondicionáló": f['Légkondicionáló'],
+            "Akadálymentesített": f['Akadálymentesített'],
+            "Fürdő és wc": f['Fürdő és wc'],
+            "Tájolás": f['Tájolás'],
+            "Kilátás": f['Kilátás'],
+            "Erkély mérete": f['Erkély mérete'],
+            "Kertkapcsolatos": f['Kertkapcsolatos'],
+            "Tetőtér": f['Tetőtér'],
+            "Parkolás": f['Parkolás']
+          }
         };
       });
 
