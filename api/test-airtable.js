@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = `https://api.airtable.com/v0/meta/bases/${baseId}/tables`;
+    const url = 'https://api.airtable.com/v0/meta/bases';
 
     const response = await fetch(url, {
       headers: {
