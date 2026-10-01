@@ -1,10 +1,20 @@
-CDC Dabas – profi ingatlan adatlap v5
+CDC Dabas – aktuális frontend
 
-Újdonság:
-- kétoszlopos, ingatlanportál-szerű „Az ingatlan főbb jellemzői” blokk
-- az alábbi Airtable mezők automatikusan megjelennek, ha ki vannak töltve:
-  Ingatlan állapota, Építés éve, Komfort, Emelet, Épület szintjei, Lift,
-  Belmagasság, Légkondicionáló, Akadálymentesített, Fürdő és wc, Tájolás,
-  Kilátás, Erkély mérete, Kertkapcsolatos, Tetőtér, Parkolás
-- csak a kitöltött mezők jelennek meg
-- v4 minden funkciója megmarad: 4:3 fotógaléria, keresési görgetés, alaprajz, térkép, érdeklődés
+Funkciók:
+- Airtable-ból csak az Aktív + Publikálva a weboldalon rekordok jelennek meg.
+- Részletes kereső: eladó/kiadó, ingatlantípus, város autocomplete, ár, alapterület, szobaszám, szabad szavas keresés.
+- Az ingatlankártya teljes képe és az adatlap ugyanazt az Airtable rekordot nyitja meg.
+- ÚJ és KIZÁRÓLAGOS jelölés az Airtable checkbox mezői alapján.
+- Részletes adatlap csak kitöltött jellemzőket mutat.
+- Ildikó fotója az assets/ildiko.jpg fájlban.
+- Kapcsolati űrlap a Resend API-n keresztül Ildikó címére, CC-vel.
+
+Vercel környezeti változók:
+AIRTABLE_TOKEN
+AIRTABLE_BASE_ID
+AIRTABLE_PROPERTIES_TABLE (opcionális, alapértelmezett: tblNJ5etsbiMWAnMZ)
+RESEND_API_KEY
+CONTACT_FROM_EMAIL (opcionális; a Resendben hitelesített feladói cím legyen)
+
+Az email küldés csak a RESEND_API_KEY beállítása után működik.
+A végleges jogi oldalon a hivatalos cégadatokat és az ingatlanközvetítői nyilvántartási számot ki kell tölteni.

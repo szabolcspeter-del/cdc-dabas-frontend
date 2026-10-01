@@ -71,6 +71,10 @@ export default async function handler(req, res) {
           floorplan,
           map: f['Helyszín / térkép'] || '',
           featured: f['Kiemelt ingatlan'] === true,
+          isNew: f['Új'] === true || f['ÚJ'] === true || f['Új ingatlan'] === true,
+          exclusive: f['Kizárólagos'] === true || f['KIZÁRÓLAGOS'] === true || f['Kizárólagos ingatlan'] === true,
+          address: f['Cím'] || '',
+          code: f['Ingatlan kód'] || '',
           extra: {
             "Ingatlan állapota": f['Ingatlan állapota'],
             "Építés éve": f['Építés éve'],
@@ -87,7 +91,10 @@ export default async function handler(req, res) {
             "Erkély mérete": f['Erkély mérete'],
             "Kertkapcsolatos": f['Kertkapcsolatos'],
             "Tetőtér": f['Tetőtér'],
-            "Parkolás": f['Parkolás']
+            "Parkolás": f['Parkolás'],
+            "Fűtés típusa": f['Fűtés típusa'],
+            "Pince": f['Pince'],
+            "Tároló": f['Tároló']
           }
         };
       });
