@@ -68,6 +68,7 @@ export default async function handler(req, res) {
           bathrooms: Number(f['Fürdőszobák száma'] || 0),
           description: f['Leírás'] || '',
           photos,
+          photo: photos[0] || null,
           floorplan,
           map: f['Helyszín / térkép'] || '',
           featured: f['Kiemelt ingatlan'] === true,
