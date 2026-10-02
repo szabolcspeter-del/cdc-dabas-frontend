@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/ingatlan/:slug", "destination": "/index.html" }
+  ]
+}

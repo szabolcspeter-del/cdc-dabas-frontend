@@ -257,9 +257,26 @@ async function trackPropertyView(propertyId){
     if(r.ok&&isUnique){try{localStorage.setItem(uniqueKey,"1");}catch(_){}}
   }catch(err){console.error('Megtekintés számlálási hiba:',err);}
 }
+function slugify(value){
+  return String(value||"")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase().replace(/&/g," es ").replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-+|-+$/g,"").replace(/-+/g,"-");
+}
+function propertySlug(p){
+  const code=slugify(p.code||p.ingatlanId||p.id);
+  const type=slugify(p.type||"");
+  const city=slugify(p.city||"");
+  const title=slugify(p.title||"");
+  const descriptive=(type && city) ? `${type}-${city}` : (title||city||type||"ingatlan");
+  return `${code}-${descriptive}`.replace(/-+/g,"-");
+}
+function propertyPath(p){
+  return `/ingatlan/${encodeURIComponent(propertySlug(p))}`;
+}
 function updateSeoForProperty(p){
   const base="https://www.dabasingatlan.hu/";
-  const url=`${base}?ingatlan=${encodeURIComponent(p.id)}`;
+  const url=`${base.slice(0,-1)}${propertyPath(p)}`;
   const title=`${p.deal||"Ingatlan"} ${p.title||""} | CDC Dabas Ingatlaniroda`;
   const desc=(p.description||`${p.city||"Dabas és környéke"} – ${p.type||"ingatlan"}.`).replace(/\s+/g," ").trim().slice(0,155);
   document.title=title;
@@ -289,7 +306,7 @@ function openMById(id){
   const p=P.find(x=>x.id===id);
   if(!p)return;
   currentDetail=p; currentPhoto=0; updateSeoForProperty(p); renderDetail(); document.getElementById("modal").classList.add("open"); document.body.style.overflow="hidden";
-  try{history.replaceState({},"",`/?ingatlan=${encodeURIComponent(p.id)}`);}catch(_){}
+  try{history.replaceState({propertyId:p.id},"",propertyPath(p));}catch(_){}
   trackPropertyView(p.id);
 }
 function detailStats(p){
@@ -324,7 +341,21 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM();if(document
 
 async function loadProperties(){
   const cards=document.getElementById("cards"); cards.innerHTML='<p class="muted">Ingatlanok betöltése…</p>';
-  try{const r=await fetch('/api/properties');const data=await r.json();if(!r.ok)throw new Error(data.error||'API hiba');P=data.properties||[];fillSearchOptions();render(P.filter(p=>p.featured),1);const target=new URLSearchParams(location.search).get('ingatlan');if(target){const found=P.find(p=>p.id===target);if(found){setTimeout(()=>openMById(found.id),80);}}}catch(e){console.error(e);cards.innerHTML='<p class="muted">Az ingatlanok jelenleg nem tölthetők be. A kapcsolatfelvétel továbbra is elérhető.</p>';}
+  try{
+    const r=await fetch('/api/properties');
+    const data=await r.json();
+    if(!r.ok)throw new Error(data.error||'API hiba');
+    P=data.properties||[];
+    fillSearchOptions();
+    render(P.filter(p=>p.featured),1);
+    const queryTarget=new URLSearchParams(location.search).get('ingatlan');
+    const pathMatch=location.pathname.match(/^\/ingatlan\/([^/]+)\/?$/i);
+    const pathTarget=pathMatch?decodeURIComponent(pathMatch[1]):null;
+    let found=null;
+    if(queryTarget) found=P.find(p=>p.id===queryTarget);
+    if(!found && pathTarget) found=P.find(p=>propertySlug(p)===pathTarget);
+    if(found){setTimeout(()=>openMById(found.id),80);}
+  }catch(e){console.error(e);cards.innerHTML='<p class="muted">Az ingatlanok jelenleg nem tölthetők be. A kapcsolatfelvétel továbbra is elérhető.</p>';}
 }
 async function send(e){
   e.preventDefault();
