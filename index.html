@@ -3,7 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CDC Dabas Ingatlaniroda</title>
+<title>CDC Dabas Ingatlaniroda | Eladó és kiadó ingatlanok Dabas és környékén</title>
+<meta name="description" content="CDC Dabas Ingatlaniroda – eladó és kiadó ingatlanok Dabas és környékén. Házak, lakások, telkek és egyéb ingatlanok személyes ügyintézéssel.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://www.dabasingatlan.hu/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:site_name" content="CDC Dabas Ingatlaniroda">
+<meta property="og:title" content="CDC Dabas Ingatlaniroda | Eladó és kiadó ingatlanok">
+<meta property="og:description" content="Eladó és kiadó ingatlanok Dabas és környékén, személyes figyelemmel.">
+<meta property="og:url" content="https://www.dabasingatlan.hu/">
+<meta property="og:image" content="https://www.dabasingatlan.hu/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CDC Dabas Ingatlaniroda | Eladó és kiadó ingatlanok">
+<meta name="twitter:description" content="Eladó és kiadó ingatlanok Dabas és környékén.">
+<meta name="twitter:image" content="https://www.dabasingatlan.hu/icon-512.png">
+<script type="application/ld+json" id="orgSchema">{"@context":"https://schema.org","@type":"RealEstateAgent","name":"CDC Dabas Ingatlaniroda","url":"https://www.dabasingatlan.hu/","telephone":"+36 70 977 7820","email":"dabas@cdci.hu","address":{"@type":"PostalAddress","streetAddress":"Bartók Béla út 47.","postalCode":"2370","addressLocality":"Dabas","addressCountry":"HU"}}</script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--g:#12372f;--g2:#1d5145;--gold:#c7a35a;--cream:#f6f2e9;--ink:#17211e;--muted:#68736f;--line:#e6e0d4}
@@ -242,10 +257,39 @@ async function trackPropertyView(propertyId){
     if(r.ok&&isUnique){try{localStorage.setItem(uniqueKey,"1");}catch(_){}}
   }catch(err){console.error('Megtekintés számlálási hiba:',err);}
 }
+function updateSeoForProperty(p){
+  const base="https://www.dabasingatlan.hu/";
+  const url=`${base}?ingatlan=${encodeURIComponent(p.id)}`;
+  const title=`${p.deal||"Ingatlan"} ${p.title||""} | CDC Dabas Ingatlaniroda`;
+  const desc=(p.description||`${p.city||"Dabas és környéke"} – ${p.type||"ingatlan"}.`).replace(/\s+/g," ").trim().slice(0,155);
+  document.title=title;
+  const setMeta=(selector,attr,value)=>{let el=document.querySelector(selector);if(!el){el=document.createElement("meta");el.setAttribute(attr[0],attr[1]);document.head.appendChild(el);}el.content=value;};
+  setMeta('meta[name="description"]',['name','description'],desc);
+  setMeta('meta[property="og:title"]',['property','og:title'],title);
+  setMeta('meta[property="og:description"]',['property','og:description'],desc);
+  setMeta('meta[property="og:url"]',['property','og:url'],url);
+  setMeta('meta[property="og:image"]',['property','og:image'],p.photo||`${base}icon-512.png`);
+  setMeta('meta[name="twitter:title"]',['name','twitter:title'],title);
+  setMeta('meta[name="twitter:description"]',['name','twitter:description'],desc);
+  setMeta('meta[name="twitter:image"]',['name','twitter:image'],p.photo||`${base}icon-512.png`);
+  let canonical=document.querySelector('link[rel="canonical"]'); if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.appendChild(canonical);} canonical.href=url;
+  let schema=document.getElementById("propertySchema"); if(!schema){schema=document.createElement("script");schema.type="application/ld+json";schema.id="propertySchema";document.head.appendChild(schema);}
+  schema.textContent=JSON.stringify({"@context":"https://schema.org","@type":"RealEstateListing","name":title,"url":url,"description":desc,"image":p.photos||[],"offers":{"@type":"Offer","price":p.price||0,"priceCurrency":"HUF","availability":"https://schema.org/InStock"},"address":{"@type":"PostalAddress","addressLocality":p.city||"Dabas","addressCountry":"HU"}});
+}
+function resetSeo(){
+  document.title="CDC Dabas Ingatlaniroda | Eladó és kiadó ingatlanok Dabas és környékén";
+  const base="https://www.dabasingatlan.hu/";
+  const setMeta=(selector,attr,value)=>{let el=document.querySelector(selector);if(!el){el=document.createElement("meta");el.setAttribute(attr[0],attr[1]);document.head.appendChild(el);}el.content=value;};
+  setMeta('meta[name="description"]',['name','description'],"CDC Dabas Ingatlaniroda – eladó és kiadó ingatlanok Dabas és környékén. Házak, lakások, telkek és egyéb ingatlanok személyes ügyintézéssel.");
+  ["og:title","og:description","og:url","og:image"].forEach((prop,i)=>{const vals=["CDC Dabas Ingatlaniroda | Eladó és kiadó ingatlanok","Eladó és kiadó ingatlanok Dabas és környékén, személyes figyelemmel.",base,`${base}icon-512.png`];setMeta(`meta[property="${prop}"]`,['property',prop],vals[i]);});
+  let canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=base;
+  const schema=document.getElementById("propertySchema");if(schema)schema.remove();
+}
 function openMById(id){
   const p=P.find(x=>x.id===id);
   if(!p)return;
-  currentDetail=p; currentPhoto=0; renderDetail(); document.getElementById("modal").classList.add("open"); document.body.style.overflow="hidden";
+  currentDetail=p; currentPhoto=0; updateSeoForProperty(p); renderDetail(); document.getElementById("modal").classList.add("open"); document.body.style.overflow="hidden";
+  try{history.replaceState({},"",`/?ingatlan=${encodeURIComponent(p.id)}`);}catch(_){}
   trackPropertyView(p.id);
 }
 function detailStats(p){
@@ -274,7 +318,7 @@ function renderDetail(){
 }
 function setPhoto(i){currentPhoto=i;renderDetail()}
 function changePhoto(delta){const n=(currentDetail?.photos||[]).length;if(!n)return;currentPhoto=(currentPhoto+delta+n)%n;renderDetail()}
-function closeM(){document.getElementById("modal").classList.remove("open");document.body.style.overflow=""}
+function closeM(){document.getElementById("modal").classList.remove("open");document.body.style.overflow="";resetSeo();try{history.replaceState({},"",location.pathname);}catch(_){} }
 document.querySelectorAll("#deal,#type,#city,#minPrice,#maxPrice,#minArea,#maxArea,#minRooms,#q").forEach(el=>el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();filter()}}));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM();if(document.getElementById("modal").classList.contains("open")&&currentDetail?.photos?.length){if(e.key==="ArrowLeft")changePhoto(-1);if(e.key==="ArrowRight")changePhoto(1)}if(e.key==="Enter"&&document.activeElement?.id==="q")filter()});
 
