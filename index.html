@@ -223,7 +223,7 @@ async function send(e){
   const form=e.currentTarget, btn=document.getElementById('sendBtn'), status=document.getElementById('formStatus');
   btn.disabled=true; status.textContent='Üzenet küldése…';
   const payload=Object.fromEntries(new FormData(form).entries());
-  try{const r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await r.json();if(!r.ok)throw new Error(data.message||data.error||'Küldési hiba');form.reset();status.textContent='Köszönjük! Az üzenetet továbbítottuk.';}catch(err){console.error(err);status.textContent='Az üzenetet most nem sikerült elküldeni. Kérjük, írjon közvetlenül az ildi.kovacs@cdci.hu címre vagy hívja a +36 70 977 7820 számot.';}finally{btn.disabled=false;}
+  try{const r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const responseText=await r.text();let data={};try{data=responseText?JSON.parse(responseText):{};}catch(_){data={message:responseText};}if(!r.ok)throw new Error(data.message||data.error||`Küldési hiba (${r.status})`);form.reset();status.textContent='Köszönjük! Az üzenetet továbbítottuk.';}catch(err){console.error(err);status.textContent=`Az üzenetet most nem sikerült elküldeni. ${err?.message||'Ismeretlen hiba'}`; }finally{btn.disabled=false;}
 }
 loadProperties();
 </script>
