@@ -280,7 +280,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM();if(document
 
 async function loadProperties(){
   const cards=document.getElementById("cards"); cards.innerHTML='<p class="muted">Ingatlanok betöltése…</p>';
-  try{const r=await fetch('/api/properties');const data=await r.json();if(!r.ok)throw new Error(data.error||'API hiba');P=data.properties||[];fillSearchOptions();render(P.filter(p=>p.featured),1);}catch(e){console.error(e);cards.innerHTML='<p class="muted">Az ingatlanok jelenleg nem tölthetők be. A kapcsolatfelvétel továbbra is elérhető.</p>';}
+  try{const r=await fetch('/api/properties');const data=await r.json();if(!r.ok)throw new Error(data.error||'API hiba');P=data.properties||[];fillSearchOptions();render(P.filter(p=>p.featured),1);const target=new URLSearchParams(location.search).get('ingatlan');if(target){const found=P.find(p=>p.id===target);if(found){setTimeout(()=>openMById(found.id),80);}}}catch(e){console.error(e);cards.innerHTML='<p class="muted">Az ingatlanok jelenleg nem tölthetők be. A kapcsolatfelvétel továbbra is elérhető.</p>';}
 }
 async function send(e){
   e.preventDefault();
