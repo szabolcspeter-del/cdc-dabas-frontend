@@ -216,10 +216,33 @@ function resetSearch(){
   document.getElementById("resultsSubtitle").textContent="Válogatás a kiemelt, jelenleg közzétett ingatlanokból.";
   render(P.filter(p=>p.featured),1);
 }
+function getVisitorId(){
+  const key="cdc_dabas_visitor_id";
+  try{
+    let id=localStorage.getItem(key);
+    if(!id){
+      id=(crypto&&crypto.randomUUID)?crypto.randomUUID():`v_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      localStorage.setItem(key,id);
+    }
+    return id;
+  }catch(_){
+    return null;
+  }
+}
+async function trackPropertyView(propertyId){
+  const uniqueKey=`cdc_dabas_unique_view_${propertyId}`;
+  let isUnique=false;
+  try{isUnique=localStorage.getItem(uniqueKey)!=="1";}catch(_){}
+  try{
+    const r=await fetch('/api/view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:propertyId,unique:isUnique,visitorId:getVisitorId()})});
+    if(r.ok&&isUnique){try{localStorage.setItem(uniqueKey,"1");}catch(_){}}
+  }catch(err){console.error('Megtekintés számlálási hiba:',err);}
+}
 function openMById(id){
   const p=P.find(x=>x.id===id);
   if(!p)return;
   currentDetail=p; currentPhoto=0; renderDetail(); document.getElementById("modal").classList.add("open"); document.body.style.overflow="hidden";
+  trackPropertyView(p.id);
 }
 function detailStats(p){
   const items=[[p.area?`${p.area} m²`:"–","Alapterület"],[p.rooms?`${p.rooms} szoba`:"–","Szobák"],[p.bathrooms?`${p.bathrooms}`:"–","Fürdőszoba"],[p.lot?`${p.lot} m²`:"–","Telekméret"]];
