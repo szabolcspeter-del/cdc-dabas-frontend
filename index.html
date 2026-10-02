@@ -94,7 +94,7 @@ const PAGE_SIZE=9;
 const F=n=>new Intl.NumberFormat("hu-HU").format(Number(n||0))+" Ft";
 const escapeHtml=s=>String(s??"").replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const safeUrl=s=>String(s||"").replace(/"/g,"%22");
-const norm=s=>String(s??"").toLocaleLowerCase("hu-HU").trim();
+const norm=s=>String(s??"").toLocaleLowerCase("hu-HU").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
 
 function uniqueSorted(values){return [...new Set(values.filter(Boolean).map(v=>String(v).trim()))].sort((a,b)=>a.localeCompare(b,"hu"));}
 function fillSearchOptions(){
@@ -126,7 +126,7 @@ function render(x=P, page=1){
     if(p.isNew) badges.push('<span class="badge new">ÚJ</span>');
     if(p.exclusive) badges.push('<span class="badge exclusive">KIZÁRÓLAGOS</span>');
     if(!badges.length) badges.push(`<span class="badge">${escapeHtml(p.deal||"Eladó")}</span>`);
-    return `<article class="card"><a class="card-link" href="#" onclick="openMById('${escapeHtml(p.id)}');return false"><div class="photo" style="${p.photo?`background-image:url('${safeUrl(p.photo)}')`:''}"><div class="badge-row">${badges.join("")}</div></div><div class="body"><h3>${escapeHtml(p.title)}</h3><div class="muted">${escapeHtml(p.city)} · ${escapeHtml(p.type)}</div><div class="price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div><div class="meta"><span>${p.area||"–"} m²</span>${p.lot?`<span>${p.lot} m² telek</span>`:""}${p.rooms?`<span>${p.rooms} szoba</span>`:""}</div><span class="details">Részletes adatlap</span></div></a></article>`;
+    return `<article class="card"><a class="card-link" href="#" data-property-id="${escapeHtml(p.id)}"><div class="photo" style="${p.photo?`background-image:url('${safeUrl(p.photo)}')`:''}"><div class="badge-row">${badges.join("")}</div></div><div class="body"><h3>${escapeHtml(p.title)}</h3><div class="muted">${escapeHtml(p.city)} · ${escapeHtml(p.type)}</div><div class="price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div><div class="meta"><span>${p.area||"–"} m²</span>${p.lot?`<span>${p.lot} m² telek</span>`:""}${p.rooms?`<span>${p.rooms} szoba</span>`:""}</div><span class="details">Részletes adatlap</span></div></a></article>`;
   }).join("");
   if(pagination){
     if(totalPages<=1){ pagination.innerHTML=''; return; }
@@ -144,6 +144,14 @@ function render(x=P, page=1){
     pagination.innerHTML=html;
   }
 }
+document.getElementById("cards").addEventListener("click",e=>{
+  const link=e.target.closest("[data-property-id]");
+  if(!link)return;
+  e.preventDefault();
+  const id=link.getAttribute("data-property-id");
+  openMById(id);
+});
+
 function goPage(page){
   render(currentResults,page);
   document.getElementById("ingatlanok").scrollIntoView({behavior:"smooth",block:"start"});
