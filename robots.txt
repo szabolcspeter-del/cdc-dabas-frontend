@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Allow: /api/property-image
+Allow: /ingatlan-kepek/
 Disallow: /api/
 
 Sitemap: https://www.dabasingatlan.hu/sitemap.xml

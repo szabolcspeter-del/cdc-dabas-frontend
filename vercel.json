@@ -5,6 +5,10 @@
       "destination": "/api/sitemap"
     },
     {
+      "source": "/ingatlan-kepek/:slug.jpg",
+      "destination": "/api/property-image?slug=:slug"
+    },
+    {
       "source": "/ingatlan/:slug",
       "destination": "/api/property-page?slug=:slug"
     }
