@@ -6,7 +6,7 @@
     },
     {
       "source": "/ingatlan/:slug",
-      "destination": "/index.html"
+      "destination": "/api/property-page?slug=:slug"
     }
   ],
   "headers": [

@@ -103,30 +103,84 @@ async function getPublishedProperties() {
     offset = data.offset || '';
   } while (offset);
 
-  return records
-    .filter(record => {
-      const f = record.fields || {};
-      return String(f['Ingatlan státusza'] || '').trim().toLowerCase() === 'aktív'
-        && f['Publikálva a weboldalon'] === true;
-    });
+  return records.filter(record => {
+    const f = record.fields || {};
+    return String(f['Ingatlan státusza'] || '').trim().toLowerCase() === 'aktív'
+      && f['Publikálva a weboldalon'] === true;
+  });
+}
+
+function getRequestedSlug(req) {
+  const fromQuery = cleanText(req.query?.slug || '').replace(/^\/+|\/+$/g, '');
+  if (fromQuery) return decodeURIComponent(fromQuery);
+
+  // Vercel can expose the original path in different request properties.
+  const candidates = [
+    req.url,
+    req.headers?.['x-forwarded-uri'],
+    req.headers?.['x-vercel-original-url'],
+    req.headers?.['x-invoke-path']
+  ].filter(Boolean);
+
+  for (const candidate of candidates) {
+    const match = String(candidate).match(/\/ingatlan\/([^/?#]+)/i);
+    if (match?.[1]) return decodeURIComponent(match[1]);
+  }
+  return '';
+}
+
+function findProperty(records, slug) {
+  const normalized = slugify(slug);
+  if (!normalized) return null;
+
+  // 1. Exact match with the exact same slug algorithm used by the frontend.
+  let record = records.find(r => propertySlug(r.fields || {}, r.id) === normalized);
+  if (record) return record;
+
+  // 2. More tolerant fallback: compare the code prefix and the descriptive suffix.
+  // This protects the Facebook renderer if Airtable contains a number/string formatting
+  // difference in the code field while the public URL remains unchanged.
+  const dash = normalized.indexOf('-');
+  const codePart = dash > 0 ? normalized.slice(0, dash) : normalized;
+  const descriptivePart = dash > 0 ? normalized.slice(dash + 1) : '';
+
+  record = records.find(r => {
+    const f = r.fields || {};
+    const codes = [f['Ingatlan kód'], f['Ingatlan ID'], r.id]
+      .filter(v => v !== undefined && v !== null && String(v).trim() !== '')
+      .map(slugify);
+    if (!codes.includes(codePart)) return false;
+
+    const type = slugify(f['Ingatlantípus'] || '');
+    const city = slugify(f['Település'] || '');
+    const title = slugify(f['Cím'] || '');
+    const suffixes = [
+      type && city ? `${type}-${city}` : '',
+      title || '',
+      city || '',
+      type || ''
+    ].filter(Boolean);
+    return !descriptivePart || suffixes.some(s => s === descriptivePart || s.endsWith(`-${descriptivePart}`));
+  });
+
+  return record || null;
 }
 
 async function getIndexTemplate() {
-  const response = await fetch(`${ORIGIN}/index.html`, {
-    headers: { 'User-Agent': 'CDC-Dabas-SEO-Renderer/1.0' }
+  const response = await fetch(`${ORIGIN}/index.html?seo_template=1`, {
+    headers: { 'User-Agent': 'CDC-Dabas-SEO-Renderer/2.0' },
+    cache: 'no-store'
   });
   if (!response.ok) throw new Error(`Could not load index.html (${response.status})`);
   return response.text();
 }
 
-function slugFromUrl(url) {
-  return String(url).split('/').filter(Boolean).pop() || '';
-}
-
-function injectMeta(html, p, url) {
+function injectMeta(html, p, url, slug) {
   const title = makeTitle(p);
   const description = makeDescription(p);
-  const image = p.photo ? `${ORIGIN}/api/property-image?slug=${encodeURIComponent(slugFromUrl(url))}` : `${ORIGIN}/icon-512.png`;
+  const image = p.photo
+    ? `${ORIGIN}/api/property-image?slug=${encodeURIComponent(slug)}`
+    : `${ORIGIN}/icon-512.png`;
 
   const replacements = [
     [/<title>[^<]*<\/title>/i, `<title>${escHtml(title)}</title>`],
@@ -145,9 +199,7 @@ function injectMeta(html, p, url) {
 
   const canonical = `<link rel="canonical" href="${escHtml(url)}">`;
   result = result.replace(/<link\s+rel="canonical"[^>]*>/i, canonical);
-  if (!/<link\s+rel="canonical"[^>]*>/i.test(result)) {
-    result = result.replace(/<\/head>/i, `${canonical}\n</head>`);
-  }
+  if (!/<link\s+rel="canonical"[^>]*>/i.test(result)) result = result.replace(/<\/head>/i, `${canonical}\n</head>`);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -192,9 +244,7 @@ function injectMeta(html, p, url) {
 
   const schemaTag = `<script type="application/ld+json" id="propertySchema">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [jsonLd, breadcrumb] }).replace(/</g, '\\u003c')}</script>`;
   result = result.replace(/<script\s+type="application\/ld\+json"\s+id="propertySchema">[\s\S]*?<\/script>/i, schemaTag);
-  if (!/id="propertySchema"/.test(result)) {
-    result = result.replace(/<\/head>/i, `${schemaTag}\n</head>`);
-  }
+  if (!/id="propertySchema"/.test(result)) result = result.replace(/<\/head>/i, `${schemaTag}\n</head>`);
 
   return result;
 }
@@ -203,21 +253,24 @@ export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).send('Method not allowed');
 
   try {
-    const slug = cleanText(req.query?.slug || '').replace(/^\/+|\/+$/g, '');
+    const slug = getRequestedSlug(req);
     if (!slug) return res.status(400).send('Missing property slug');
 
     const records = await getPublishedProperties();
-    const record = records.find(r => propertySlug(r.fields || {}, r.id) === slug);
+    const record = findProperty(records, slug);
     if (!record) return res.status(404).send('Property not found');
 
     const p = mapProperty(record);
-    const url = `${ORIGIN}/ingatlan/${encodeURIComponent(propertySlug(record.fields || {}, record.id))}`;
+    const canonicalSlug = propertySlug(record.fields || {}, record.id);
+    const url = `${ORIGIN}/ingatlan/${encodeURIComponent(canonicalSlug)}`;
     const template = await getIndexTemplate();
-    const html = injectMeta(template, p, url);
+    const html = injectMeta(template, p, url, canonicalSlug);
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+    res.setHeader('X-Robots-Tag', 'index, follow');
+    // Do not let an old generic homepage HTML response get stuck in a CDN cache.
+    res.setHeader('Cache-Control', 'no-store, max-age=0, must-revalidate');
     return res.status(200).send(html);
   } catch (error) {
     console.error('Property page rendering failed:', error);

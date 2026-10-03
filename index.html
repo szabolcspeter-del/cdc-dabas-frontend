@@ -6,7 +6,6 @@
 <title>CDC Dabas Ingatlaniroda | Eladó és kiadó ingatlanok Dabas és környékén</title>
 <meta name="description" content="CDC Dabas Ingatlaniroda – eladó és kiadó ingatlanok Dabas és környékén. Házak, lakások, telkek és egyéb ingatlanok személyes ügyintézéssel.">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<link rel="canonical" href="https://www.dabasingatlan.hu/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="hu_HU">
 <meta property="og:site_name" content="CDC Dabas Ingatlaniroda">
@@ -18,7 +17,7 @@
 <meta name="twitter:title" content="CDC Dabas Ingatlaniroda | Eladó és kiadó ingatlanok">
 <meta name="twitter:description" content="Eladó és kiadó ingatlanok Dabas és környékén.">
 <meta name="twitter:image" content="https://www.dabasingatlan.hu/icon-512.png">
-<script type="application/ld+json" id="orgSchema">{"@context":"https://schema.org","@type":"RealEstateAgent","name":"CDC Dabas Ingatlaniroda","url":"https://www.dabasingatlan.hu/","telephone":"+36 70 977 7820","email":"dabas@cdci.hu","address":{"@type":"PostalAddress","streetAddress":"Bartók Béla út 47.","postalCode":"2370","addressLocality":"Dabas","addressCountry":"HU"}}</script>
+<script type="application/ld+json" id="orgSchema">{"@context":"https://schema.org","@type":"RealEstateAgent","@id":"https://www.dabasingatlan.hu/#organization","name":"CDC Dabas Ingatlaniroda","url":"https://www.dabasingatlan.hu/","telephone":"+36 70 977 7820","email":"ildi.kovacs@cdci.hu","image":"https://www.dabasingatlan.hu/assets/iroda-kulso.png","logo":"https://www.dabasingatlan.hu/icon-512.png","address":{"@type":"PostalAddress","streetAddress":"Bartók Béla út 47.","postalCode":"2370","addressLocality":"Dabas","addressCountry":"HU"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"12:00"}]}</script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--g:#12372f;--g2:#1d5145;--gold:#c7a35a;--cream:#f6f2e9;--ink:#17211e;--muted:#68736f;--line:#e6e0d4}
@@ -37,6 +36,7 @@ section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{fon
 .detail-gallery{padding:18px 18px 0}.main-photo{aspect-ratio:4/3;min-height:0;border-radius:18px;background:linear-gradient(135deg,#2f5b50,#d5bd86) center/cover;position:relative;overflow:hidden}.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border:0;border-radius:50%;background:#fffdd;color:var(--g);font-size:25px;cursor:pointer;box-shadow:0 4px 18px #0002}.gallery-arrow.prev{left:16px}.gallery-arrow.next{right:16px}.photo-count{position:absolute;right:16px;bottom:16px;background:#102f28dd;color:#fff;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:700}.thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 2px 2px}.thumb{flex:0 0 78px;height:58px;border-radius:8px;border:2px solid transparent;background-size:cover;background-position:center;cursor:pointer}.thumb.active{border-color:var(--gold)}
 .detail-content{padding:20px 36px 34px}.detail-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.detail-content h2{font:700 40px/1.1 "Playfair Display";margin:7px 0}.detail-price{font-size:29px;font-weight:800;color:var(--g);white-space:nowrap}.detail-meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:15px;margin:16px 0 26px}.detail-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:24px 0;padding:18px 0}.stat{padding:0 16px;border-right:1px solid var(--line)}.stat:first-child{padding-left:0}.stat:last-child{border-right:0}.stat strong{display:block;font-size:18px;color:var(--g);margin-top:4px}.stat span{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
 
+.breadcrumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 14px;color:var(--muted);font-size:13px}.breadcrumb a{color:var(--g);font-weight:700}.breadcrumb span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}
 .detail-specs{margin-top:30px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
 .detail-specs h3{font:700 25px "Playfair Display";margin:0;padding:24px 26px 8px}
 .spec-grid{display:grid;grid-template-columns:1fr 1fr;padding:8px 26px 24px}
@@ -46,6 +46,24 @@ section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{fon
 .spec-label{color:#303b37}
 .spec-value{font-weight:800;color:var(--ink)}
 .spec-value.empty{color:#aab2bb;font-weight:600}
+
+@media (min-width: 851px){
+  /* Desktop-only: unified contact media panel */
+  .contact{align-items:stretch;}
+  .contact-media{height:100%;min-height:0;align-self:stretch;grid-template-columns:400px minmax(0,1fr);grid-template-rows:320px 1fr;gap:18px;}
+  .contact-media img,.contact-map{height:320px;min-height:0;box-sizing:border-box;}
+  .contact-media img{filter:brightness(1.08) contrast(1.07) saturate(1.08);object-position:center center;}
+  .contact-why{grid-column:1 / -1;background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px 30px;box-shadow:0 10px 30px #00000008;display:flex;flex-direction:column;justify-content:center;}
+  .contact-why .eyebrow{color:var(--gold);margin-bottom:16px;}
+  .why-items{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .why-items div{padding-right:18px;border-right:1px solid var(--line);}
+  .why-items div:last-child{border-right:0;padding-right:0;}
+  .why-items strong{display:block;font-size:16px;color:var(--ink);margin-bottom:5px;}
+  .why-items div{position:relative;}
+  .why-icon{width:38px;height:38px;border-radius:50%;background:#f4ead4;border:1px solid #ead9b8;display:flex;align-items:center;justify-content:center;color:var(--g);font-size:20px;font-weight:700;margin-bottom:10px;}
+  .why-items span{display:block;color:var(--muted);font-size:13px;line-height:1.55;}
+  .why-claim{margin-top:20px;color:var(--g);font:600 20px/1.3 "Playfair Display",serif;text-align:center;}
+}
 @media(max-width:700px){
   .spec-grid{grid-template-columns:1fr;padding:8px 18px 20px}
   .spec-item:nth-child(odd){padding-right:0;border-right:0}
@@ -54,11 +72,17 @@ section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{fon
 }
 
 .detail-section{margin-top:30px}.detail-section h3{font:700 25px "Playfair Display";margin:0 0 12px}.description{line-height:1.8;color:#42504b;white-space:pre-line}.plan{width:100%;max-height:600px;object-fit:contain;border:1px solid var(--line);border-radius:14px;background:#faf9f5}.detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.detail-actions .btn{display:inline-block}.map-link{background:var(--g);color:#fff}.interest{background:var(--gold);color:#17362e}
-@media(max-width:850px){.links{display:none}.hero .wrap,.about,.contact{grid-template-columns:1fr}.contact-media{grid-template-columns:1fr}.cards,.services{grid-template-columns:1fr 1fr}.hero h1{font-size:45px}.detail-top{flex-direction:column}.detail-price{white-space:normal}.main-photo{aspect-ratio:4/3;min-height:0}.detail-stats{grid-template-columns:1fr 1fr;gap:16px}.stat:nth-child(2){border-right:0}}
-@media(max-width:560px){.top{display:none}.cards,.services,.grid{grid-template-columns:1fr}.full{grid-column:auto}.hero .wrap{width:auto;max-width:none;margin:0;padding:26px 22px}.hero .wrap > div{width:100%;min-width:0}.hero .wrap > .search{width:100%;max-width:none;margin:0}.search{width:100%;box-sizing:border-box}.cards{width:100%;max-width:none;margin-left:auto;margin-right:auto}.head{max-width:none;margin-left:0;margin-right:0}.hero h1{font-size:39px}.navin{padding:13px 18px}.modal{padding:0}.modalbox{max-height:100vh;border-radius:0}.detail-gallery{padding:10px}.main-photo{aspect-ratio:4/3;min-height:0;border-radius:12px}.detail-content{padding:18px 20px 28px}.detail-content h2{font-size:32px}.detail-stats{grid-template-columns:1fr 1fr}.stat{border-right:0!important;border-bottom:1px solid var(--line);padding:8px 0}.stat:last-child{border-bottom:0}}
+@media(max-width:850px){.links{display:none}.hero .wrap,.about,.contact{grid-template-columns:1fr}.contact-media{grid-template-columns:1fr}.contact-why{display:none}.cards,.services{grid-template-columns:1fr 1fr}.hero h1{font-size:45px}.detail-top{flex-direction:column}.detail-price{white-space:normal}.main-photo{aspect-ratio:4/3;min-height:0}.detail-stats{grid-template-columns:1fr 1fr;gap:16px}.stat:nth-child(2){border-right:0}}
+@media(max-width:560px){section{padding-left:20px;padding-right:20px}.top{display:none}.cards,.services,.grid{grid-template-columns:1fr}.full{grid-column:auto}.hero .wrap{width:100%;max-width:none;margin:0;padding:26px 0}.hero .wrap > div{width:100%;min-width:0}.hero .wrap > .search{width:100%;max-width:none;margin:0}.search{width:100%;box-sizing:border-box}.cards{width:100%;max-width:none;margin-left:auto;margin-right:auto}.head{max-width:none;margin-left:0;margin-right:0}.hero h1{font-size:39px}.navin{padding:13px 18px}.modal{padding:0}.modalbox{max-height:100vh;border-radius:0}.detail-gallery{padding:10px}.main-photo{aspect-ratio:4/3;min-height:0;border-radius:12px}.detail-content{padding:18px 20px 28px}.detail-content h2{font-size:32px}.detail-stats{grid-template-columns:1fr 1fr}.stat{border-right:0!important;border-bottom:1px solid var(--line);padding:8px 0}.stat:last-child{border-bottom:0}}
 
 .city-autocomplete{position:relative}.city-suggestions{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:30;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #00000018;max-height:260px;overflow:auto;display:none}.city-suggestion{display:block;width:100%;border:0;background:#fff;text-align:left;padding:13px 16px;font:inherit;color:var(--g);cursor:pointer}.city-suggestion:hover,.city-suggestion.active{background:#f3f1e9}.search-actions{display:flex;gap:10px;margin-top:10px}.secondary{background:#eef0ed;color:var(--g)}.card{min-width:0}.card-link{display:block}.photo{height:230px}.card:hover{transform:translateY(-2px);box-shadow:0 12px 32px #00000014;transition:.18s}.badge-row{position:absolute;left:14px;top:14px;display:flex;gap:7px;flex-wrap:wrap}.badge.new{background:var(--gold)}
 .pagination{max-width:1180px;margin:26px auto 0;display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap}.page-btn{min-width:42px;height:42px;border:1px solid var(--line);background:#fff;color:var(--g);border-radius:9px;font-weight:700;cursor:pointer}.page-btn.active{background:var(--g);color:#fff;border-color:var(--g)}.page-btn:disabled{opacity:.45;cursor:default}.page-info{color:var(--muted);font-size:13px;margin:0 8px}.badge.exclusive{background:var(--g);color:#fff}.result-count{font-size:13px;color:var(--muted)}.form-status{margin-top:12px;font-size:14px;color:var(--g)}.privacy-check label{display:flex;flex-direction:row;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted)}.privacy-check input{margin-top:3px}.privacy-check a{text-decoration:underline;color:var(--g);font-weight:700}.legal{max-width:900px;line-height:1.75;color:#4d5a55}.legal p{margin:0 0 16px}.missing-data{color:#a06a00;font-weight:700}.search input:focus,.search select:focus,.form input:focus,.form select:focus,.form textarea:focus{outline:2px solid #c7a35a55;outline-offset:1px}
+
+/* Szövegek sorkizárása – címek, gombok és árak változatlanok */
+.hero p,.muted,.service p,.profile-copy p,.aboutbox p,.contact-intro,.legal p,.description{
+  text-align:justify;
+  text-justify:inter-word;
+}
 </style>
 <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -69,7 +93,7 @@ section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{fon
 <div class="top"><div><span>CDC Dabas Ingatlaniroda</span><span>2370 Dabas, Bartók Béla út 47. · +36 70 977 7820</span></div></div>
 <header class="nav"><div class="navin"><a class="logo" href="#">CDC <span>DABAS</span></a><nav class="links"><a href="#ingatlanok">Ingatlanok</a><a href="#szolgaltatasok">Szolgáltatások</a><a href="#rolunk">Rólunk</a><a href="#kapcsolat">Kapcsolat</a></nav><a class="navbtn" href="#kapcsolat">Ingatlant adok el</a></div></header>
 
-<section class="hero"><div class="wrap"><div><div class="eyebrow">CDC Dabas Ingatlaniroda</div><h1>Találjuk meg együtt a következő otthonát.</h1><p>Eladó és kiadó ingatlanok Dabas és környékén, személyes figyelemmel és egy országos hálózat hátterével.</p><div class="actions"><a class="btn gold" href="#ingatlanok">Ingatlanok keresése</a><a class="btn light" href="#kapcsolat">Beszéljünk</a></div></div>
+<section class="hero"><div class="wrap"><div><div class="eyebrow">CDC Dabas Ingatlaniroda</div><h1>Eladó és kiadó ingatlanok Dabas és környékén.</h1><p>Eladó és kiadó ingatlanok Dabas és környékén, személyes figyelemmel és egy országos hálózat hátterével.</p><div class="actions"><a class="btn gold" href="#ingatlanok">Ingatlanok keresése</a><a class="btn light" href="#kapcsolat">Beszéljünk</a></div></div>
 <div class="search"><h2>Keressen az ingatlanok között</h2><div class="grid">
 <div class="field"><label>Eladó / Kiadó</label><select id="deal"><option value="">Mindegy</option></select></div>
 <div class="field"><label>Ingatlantípus</label><select id="type"><option value="">Mindegy</option></select></div>
@@ -95,7 +119,7 @@ section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{fon
 
 <section id="rolunk"><div class="about about-profile"><div class="profile-photo-wrap"><img class="profile-photo" src="assets/ildiko.jpg" alt="Péter-Kovács Ildikó, a CDC Dabas Ingatlaniroda ügyvezető-tulajdonosa"></div><div class="profile-copy"><div class="eyebrow" style="color:var(--gold)">PÉTER-KOVÁCS ILDIKÓ · ÜGYVEZETŐ-TULAJDONOS</div><h2>„Számomra az ingatlanközvetítés elsősorban bizalmi szakma.”</h2><p><strong>18 éve foglalkozom ingatlanértékesítéssel, 2012 óta pedig a dabasi CDC Ingatlaniroda tulajdonosa és vezetője vagyok.</strong> Irodánk Dabas és vonzáskörzetének egyik meghatározó ingatlanirodája, széles és folyamatosan bővülő ingatlankínálattal.</p><p>Mindig szerettem emberekkel foglalkozni, meghallgatni őket és segíteni. Hiszem, hogy egy ingatlan eladása vagy megvásárlása nem csupán üzleti döntés: sokszor egy fontos életszakasz lezárása vagy éppen valami új kezdete. Ezért számomra minden megbízás mögött elsősorban <strong>az ember áll.</strong></p><p>A munkámban van egy dolog, amiből soha nem engedek: a <strong>KORREKTSÉG.</strong> Őszintén elmondom, amit egy ingatlanról, annak értékéről vagy az értékesítés lehetőségeiről gondolok – akkor is, ha nem feltétlenül azt mondom, amit az ügyfél hallani szeretne. Hosszú távon csak bizalomra, őszinteségre és tisztességes munkára lehet építeni.</p><p>Mindig azt mondom, akkor végeztem jól a munkámat, ha évekkel később egy korábbi ügyfelem elsétál az irodám előtt, mosolyogva beinteget, és azt mondja:</p><blockquote>„Ő volt az, aki segített nekem eladni vagy megtalálni az otthonomat. Jó szívvel emlékszem rá.”</blockquote><p>18 év után is szeretem ezt a szakmát, szeretem az embereket, és ugyanolyan lelkesedéssel dolgozom minden rám bízott ingatlanon.</p><p><strong>Ha eladna, vásárolna, vagy egyszerűen csak szeretné tudni, milyen lehetőségei vannak, keressen bizalommal!</strong></p><p class="profile-signature"><strong>Péter-Kovács Ildikó</strong><br>CDC Dabas Ingatlaniroda</p></div></div></section>
 
-<section class="band" id="kapcsolat"><div class="contact"><div class="contactbox"><div class="eyebrow" style="color:var(--gold)">Kapcsolat</div><h2>Beszéljünk az ingatlanról.</h2><p class="contact-intro">Kérdés vagy ingatlanértékesítési szándék esetén keressen minket telefonon vagy e-mailben. Szívesen segítünk az ingatlan kiválasztásában, megtekintésében és az adásvétel teljes folyamatában.</p><h3>Péter-Kovács Ildikó</h3><p><strong>ügyvezető-tulajdonos</strong></p><div class="contact-details"><p>📍 2370 Dabas, Bartók Béla út 47.</p><p>📱 <a href="tel:+36709777820">+36 70 977 7820</a></p><p>✉ <a href="mailto:ildi.kovacs@cdci.hu">ildi.kovacs@cdci.hu</a></p><p>🕘 H–P 9:00–18:00 · Szo 9:00–12:00</p></div><div class="contact-actions"><a class="btn gold" href="tel:+36709777820">📞 Telefonálok</a><a class="btn light" style="background:#fff;color:var(--g);border:1px solid var(--g)" href="mailto:ildi.kovacs@cdci.hu">✉ E-mailt írok</a></div></div><div class="contact-media"><img src="assets/iroda-kulso.png" alt="A CDC Dabas Ingatlaniroda külső bejárata"><iframe class="contact-map" title="CDC Dabas Ingatlaniroda térkép" loading="lazy" src="https://www.google.com/maps?q=Bart%C3%B3k+B%C3%A9la+%C3%BAt+47%2C+2370+Dabas&output=embed"></iframe></div></div></section>
+<section class="band" id="kapcsolat"><div class="contact"><div class="contactbox"><div class="eyebrow" style="color:var(--gold)">Kapcsolat</div><h2>Beszéljünk az ingatlanról.</h2><p class="contact-intro">Kérdés vagy ingatlanértékesítési szándék esetén keressen minket telefonon vagy e-mailben. Szívesen segítünk az ingatlan kiválasztásában, megtekintésében és az adásvétel teljes folyamatában.</p><h3>Péter-Kovács Ildikó</h3><p><strong>ügyvezető-tulajdonos</strong></p><div class="contact-details"><p>📍 2370 Dabas, Bartók Béla út 47.</p><p>📱 <a href="tel:+36709777820">+36 70 977 7820</a></p><p>✉ <a href="mailto:ildi.kovacs@cdci.hu">ildi.kovacs@cdci.hu</a></p><p>🕘 H–P 9:00–18:00 · Szo 9:00–12:00</p></div><div class="contact-actions"><a class="btn gold" href="tel:+36709777820">📞 Telefonálok</a><a class="btn light" style="background:#fff;color:var(--g);border:1px solid var(--g)" href="mailto:ildi.kovacs@cdci.hu">✉ E-mailt írok</a></div></div><div class="contact-media"><img src="assets/iroda-kulso.png" alt="A CDC Dabas Ingatlaniroda külső bejárata"><iframe class="contact-map" title="CDC Dabas Ingatlaniroda térkép" loading="lazy" src="https://www.google.com/maps?q=Bart%C3%B3k+B%C3%A9la+%C3%BAt+47%2C+2370+Dabas&output=embed"></iframe><div class="contact-why"><div class="eyebrow">Miért a CDC Dabas?</div><div class="why-items"><div><span class="why-icon">⌖</span><strong>Helyi ismeret</strong><span>Ismerjük Dabast és a környék ingatlanpiacát.</span></div><div><span class="why-icon">♙</span><strong>Személyes figyelem</strong><span>Nálunk nem egy ügyfélszám vagy.</span></div><div><span class="why-icon">↔</span><strong>Végig melletted vagyunk</strong><span>A kereséstől az adásvételig.</span></div></div><div class="why-claim">Az Ön ingatlana. A mi figyelmünk.</div></div></div></div></section>
 <section id="adatvedelem"><div class="head"><div class="eyebrow" style="color:var(--gold)">Jogi tájékoztatás</div><h2>Adatkezelési tájékoztató</h2><div class="legal"><p><strong>Adatkezelő:</strong> CDC Dabas Ingatlaniroda / Péter-Kovács Ildikó. Székhely/üzleti hely: 2370 Dabas, Bartók Béla út 47. Kapcsolat: <a href="mailto:ildi.kovacs@cdci.hu">ildi.kovacs@cdci.hu</a>, +36 70 977 7820.</p><p>A megkeresés során megadott adatokat kizárólag a megkeresés megválaszolása, az ingatlanközvetítéssel kapcsolatos kapcsolatfelvétel és az ügyfélkérés kezelése céljából kezeljük. A megadott adatokat a szükséges mértékben az ügyben közreműködő szolgáltatóknak továbbíthatjuk.</p><p>Az adatkezelés jogalapját az adott megkeresés tartalma és célja alapján kell meghatározni.</p><p>Az érintett kérheti személyes adataihoz való hozzáférést, azok helyesbítését, törlését, kezelésének korlátozását, valamint élhet a jogszabályok szerinti egyéb jogaival. Kérését a fenti e-mail-címen lehet benyújtani.</p></div></div></section>
 <section id="jogi"><div class="head"><div class="eyebrow" style="color:var(--gold)">Jogi adatok</div><h2>Impresszum</h2><div class="legal"><p><strong>Szolgáltató:</strong> CDC Dabas Ingatlaniroda</p><p><strong>Ügyvezető-tulajdonos:</strong> Péter-Kovács Ildikó</p><p><strong>Üzleti hely:</strong> 2370 Dabas, Bartók Béla út 47.</p><p><strong>E-mail:</strong> <a href="mailto:ildi.kovacs@cdci.hu">ildi.kovacs@cdci.hu</a></p><p><strong>Telefon:</strong> +36 70 977 7820</p><p><strong>Ingatlanközvetítői névjegyzék:</strong> 707243/2024</p></div></div></section>
 <footer class="footer"><div>© 2026 CDC Dabas Ingatlaniroda · <a href="#adatvedelem">Adatkezelési tájékoztató</a> · <a href="#jogi">Impresszum</a></div></footer>
@@ -160,7 +184,7 @@ function render(x=P, page=1){
     if(p.isNew) badges.push('<span class="badge new">ÚJ</span>');
     if(p.exclusive) badges.push('<span class="badge exclusive">KIZÁRÓLAGOS</span>');
     if(!badges.length) badges.push(`<span class="badge">${escapeHtml(p.deal||"Eladó")}</span>`);
-    return `<article class="card"><a class="card-link" href="#" data-property-id="${escapeHtml(p.id)}"><div class="photo" style="${p.photo?`background-image:url('${safeUrl(p.photo)}')`:''}"><div class="badge-row">${badges.join("")}</div></div><div class="body"><h3>${escapeHtml(p.title)}</h3><div class="muted">${escapeHtml(p.city)} · ${escapeHtml(p.type)}</div><div class="price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div><div class="meta"><span>${p.area||"–"} m²</span>${p.lot?`<span>${p.lot} m² telek</span>`:""}${p.rooms?`<span>${p.rooms} szoba</span>`:""}</div><span class="details">Részletes adatlap</span></div></a></article>`;
+    return `<article class="card"><a class="card-link" href="${propertyPath(p)}" data-property-id="${escapeHtml(p.id)}"><div class="photo" style="${p.photo?`background-image:url('${safeUrl(p.photo)}')`:''}"><div class="badge-row">${badges.join("")}</div></div><div class="body"><h3>${escapeHtml(p.title)}</h3><div class="muted">${escapeHtml(p.city)} · ${escapeHtml(p.type)}</div><div class="price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div><div class="meta"><span>${p.area||"–"} m²</span>${p.lot?`<span>${p.lot} m² telek</span>`:""}${p.rooms?`<span>${p.rooms} szoba</span>`:""}</div><span class="details">Részletes adatlap</span></div></a></article>`;
   }).join("");
   if(pagination){
     if(totalPages<=1){ pagination.innerHTML=''; return; }
@@ -194,6 +218,9 @@ document.addEventListener("click",e=>{
 document.getElementById("cards").addEventListener("click",e=>{
   const link=e.target.closest("[data-property-id]");
   if(!link)return;
+  // A valódi href megmarad a Google és a megnyitás új lapon számára.
+  // Normál kattintásnál továbbra is a meglévő modal nyílik meg.
+  if(e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || link.target==="_blank")return;
   e.preventDefault();
   const id=link.getAttribute("data-property-id");
   openMById(id);
@@ -277,7 +304,9 @@ function propertyPath(p){
 function updateSeoForProperty(p){
   const base="https://www.dabasingatlan.hu/";
   const url=`${base.slice(0,-1)}${propertyPath(p)}`;
-  const title=`${p.deal||"Ingatlan"} ${p.title||""} | CDC Dabas Ingatlaniroda`;
+  const seoType=p.type||p.title||"Ingatlan";
+  const seoCity=p.city||"Dabas és környéke";
+  const title=`${p.deal||"Ingatlan"} ${seoType} ${seoCity} | CDC Dabas Ingatlaniroda`;
   const desc=(p.description||`${p.city||"Dabas és környéke"} – ${p.type||"ingatlan"}.`).replace(/\s+/g," ").trim().slice(0,155);
   document.title=title;
   const setMeta=(selector,attr,value)=>{let el=document.querySelector(selector);if(!el){el=document.createElement("meta");el.setAttribute(attr[0],attr[1]);document.head.appendChild(el);}el.content=value;};
@@ -291,7 +320,11 @@ function updateSeoForProperty(p){
   setMeta('meta[name="twitter:image"]',['name','twitter:image'],p.photo||`${base}icon-512.png`);
   let canonical=document.querySelector('link[rel="canonical"]'); if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.appendChild(canonical);} canonical.href=url;
   let schema=document.getElementById("propertySchema"); if(!schema){schema=document.createElement("script");schema.type="application/ld+json";schema.id="propertySchema";document.head.appendChild(schema);}
-  schema.textContent=JSON.stringify({"@context":"https://schema.org","@type":"RealEstateListing","name":title,"url":url,"description":desc,"image":p.photos||[],"offers":{"@type":"Offer","price":p.price||0,"priceCurrency":"HUF","availability":"https://schema.org/InStock"},"address":{"@type":"PostalAddress","addressLocality":p.city||"Dabas","addressCountry":"HU"}});
+  const listingSchema={"@context":"https://schema.org","@type":"RealEstateListing","@id":`${url}#listing`,"name":title,"url":url,"description":desc,"image":p.photos||[],"mainEntityOfPage":{"@type":"WebPage","@id":url},"offers":{"@type":"Offer","price":p.price||0,"priceCurrency":"HUF","availability":"https://schema.org/InStock"},"address":{"@type":"PostalAddress","addressLocality":p.city||"Dabas","addressCountry":"HU"}};
+  if(p.deal==="Kiadó"){listingSchema.offers.priceSpecification={"@type":"UnitPriceSpecification","price":p.price||0,"priceCurrency":"HUF","unitCode":"MON"};}
+  const breadcrumbName=`${p.deal||"Ingatlan"} ${seoType} ${seoCity}`.replace(/\s+/g," ").trim();
+  const breadcrumbSchema={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Főoldal","item":base},{"@type":"ListItem","position":2,"name":"Ingatlanok","item":`${base}#ingatlanok`},{"@type":"ListItem","position":3,"name":breadcrumbName,"item":url}]};
+  schema.textContent=JSON.stringify({"@context":"https://schema.org","@graph":[listingSchema,breadcrumbSchema]});
 }
 function resetSeo(){
   document.title="CDC Dabas Ingatlaniroda | Eladó és kiadó ingatlanok Dabas és környékén";
@@ -299,7 +332,7 @@ function resetSeo(){
   const setMeta=(selector,attr,value)=>{let el=document.querySelector(selector);if(!el){el=document.createElement("meta");el.setAttribute(attr[0],attr[1]);document.head.appendChild(el);}el.content=value;};
   setMeta('meta[name="description"]',['name','description'],"CDC Dabas Ingatlaniroda – eladó és kiadó ingatlanok Dabas és környékén. Házak, lakások, telkek és egyéb ingatlanok személyes ügyintézéssel.");
   ["og:title","og:description","og:url","og:image"].forEach((prop,i)=>{const vals=["CDC Dabas Ingatlaniroda | Eladó és kiadó ingatlanok","Eladó és kiadó ingatlanok Dabas és környékén, személyes figyelemmel.",base,`${base}icon-512.png`];setMeta(`meta[property="${prop}"]`,['property',prop],vals[i]);});
-  let canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=base;
+  let canonical=document.querySelector('link[rel="canonical"]');if(!canonical){canonical=document.createElement("link");canonical.rel="canonical";document.head.appendChild(canonical);} canonical.href=base;
   const schema=document.getElementById("propertySchema");if(schema)schema.remove();
 }
 function openMById(id){
@@ -331,11 +364,11 @@ function renderDetail(){
   const badges=[p.isNew?'<span class="badge new">ÚJ</span>':'',p.exclusive?'<span class="badge exclusive">KIZÁRÓLAGOS</span>':''].filter(Boolean).join(' ');
   const plan=p.floorplan?`<div class="detail-section"><h3>Alaprajz</h3><img class="plan" src="${safeUrl(p.floorplan)}" alt="Az ingatlan alaprajza"></div>`:"";
   const map=p.map?`<a class="btn map-link" href="${escapeHtml(p.map)}" target="_blank" rel="noopener">📍 Megnyitás térképen</a>`:"";
-  document.getElementById("mc").innerHTML=`<div class="detail-gallery">${gallery(p)}</div><div class="detail-content"><div class="eyebrow" style="color:var(--gold)">${escapeHtml(p.deal)} · ${escapeHtml(p.type)} ${badges}</div><div class="detail-top"><div><h2>${escapeHtml(p.title)}</h2><div class="detail-meta">${escapeHtml(p.city)}${p.address?` · ${escapeHtml(p.address)}`:""}${p.code?` · ${escapeHtml(p.code)}`:""}</div></div><div class="detail-price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div></div>${detailStats(p)}${detailSpecs(p)}<div class="detail-section"><h3>Az ingatlanról</h3><div class="description">${escapeHtml(p.description||"További részletek hamarosan.")}</div></div>${plan}<div class="detail-actions">${map}<a class="btn interest" href="#kapcsolat" onclick="closeM()">Érdekel az ingatlan</a></div></div>`;
+  document.getElementById("mc").innerHTML=`<div class="detail-gallery">${gallery(p)}</div><div class="detail-content"><nav class="breadcrumb" aria-label="Morzsamenü"><a href="/" onclick="closeM();return false;">Főoldal</a><span aria-hidden="true">›</span><a href="/#ingatlanok" onclick="closeM();return false;">Ingatlanok</a><span aria-hidden="true">›</span><span>${escapeHtml(`${p.deal||"Ingatlan"} ${p.type||p.title||"Ingatlan"} ${p.city||""}`.replace(/\s+/g," ").trim())}</span></nav><div class="eyebrow" style="color:var(--gold)">${escapeHtml(p.deal)} · ${escapeHtml(p.type)} ${badges}</div><div class="detail-top"><div><h2>${escapeHtml(p.title)}</h2><div class="detail-meta">${escapeHtml(p.city)}${p.address?` · ${escapeHtml(p.address)}`:""}${p.code?` · ${escapeHtml(p.code)}`:""}</div></div><div class="detail-price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div></div>${detailStats(p)}${detailSpecs(p)}<div class="detail-section"><h3>Az ingatlanról</h3><div class="description">${escapeHtml(p.description||"További részletek hamarosan.")}</div></div>${plan}<div class="detail-actions">${map}<a class="btn interest" href="#kapcsolat" onclick="closeM()">Érdekel az ingatlan</a></div></div>`;
 }
 function setPhoto(i){currentPhoto=i;renderDetail()}
 function changePhoto(delta){const n=(currentDetail?.photos||[]).length;if(!n)return;currentPhoto=(currentPhoto+delta+n)%n;renderDetail()}
-function closeM(){document.getElementById("modal").classList.remove("open");document.body.style.overflow="";resetSeo();try{history.replaceState({},"",location.pathname);}catch(_){} }
+function closeM(){document.getElementById("modal").classList.remove("open");document.body.style.overflow="";resetSeo();try{history.replaceState({},"","/");}catch(_){} }
 document.querySelectorAll("#deal,#type,#city,#minPrice,#maxPrice,#minArea,#maxArea,#minRooms,#q").forEach(el=>el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();filter()}}));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM();if(document.getElementById("modal").classList.contains("open")&&currentDetail?.photos?.length){if(e.key==="ArrowLeft")changePhoto(-1);if(e.key==="ArrowRight")changePhoto(1)}if(e.key==="Enter"&&document.activeElement?.id==="q")filter()});
 
@@ -361,3 +394,31 @@ loadProperties();
 </script>
 </body>
 </html>
+<style>
+/* Desktop hero finomhangolás – mobilhoz nem nyúl */
+@media (min-width:851px){
+  /* Desktop hero – kiegyensúlyozott, középre komponált elrendezés */
+  .hero .wrap{
+    min-height:630px;
+    box-sizing:border-box;
+    padding:34px 22px;
+    grid-template-columns:1.04fr .96fr;
+    gap:38px;
+    align-items:center;
+  }
+  .hero .wrap > div:first-child{
+    align-self:center;
+  }
+  .hero h1{font-size:50px;line-height:1.02;margin:13px 0 16px;max-width:680px}
+  .hero p{font-size:17px;line-height:1.55;max-width:690px}
+  .actions{margin-top:24px}
+  .search{padding:20px;border-radius:18px}
+  .search h2{font-size:24px;margin-bottom:12px}
+  .grid{gap:8px}
+  .field{gap:3px}
+  .field label{font-size:10.5px}
+  .field input,.field select,.field textarea{padding:10px;border-radius:9px}
+  .search .btn{margin-top:8px}
+  .search-actions{margin-top:8px}
+}
+</style>

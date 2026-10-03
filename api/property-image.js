@@ -50,6 +50,29 @@ async function getPublishedProperties() {
   });
 }
 
+
+function findProperty(records, slug) {
+  const normalized = slugify(slug);
+  let record = records.find(r => propertySlug(r.fields || {}, r.id) === normalized);
+  if (record) return record;
+
+  const dash = normalized.indexOf('-');
+  const codePart = dash > 0 ? normalized.slice(0, dash) : normalized;
+  const descriptivePart = dash > 0 ? normalized.slice(dash + 1) : '';
+  return records.find(r => {
+    const f = r.fields || {};
+    const codes = [f['Ingatlan kód'], f['Ingatlan ID'], r.id]
+      .filter(v => v !== undefined && v !== null && String(v).trim() !== '')
+      .map(slugify);
+    if (!codes.includes(codePart)) return false;
+    const type = slugify(f['Ingatlantípus'] || '');
+    const city = slugify(f['Település'] || '');
+    const title = slugify(f['Cím'] || '');
+    const suffixes = [type && city ? `${type}-${city}` : '', title, city, type].filter(Boolean);
+    return !descriptivePart || suffixes.some(s => s === descriptivePart || s.endsWith(`-${descriptivePart}`));
+  }) || null;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).send('Method not allowed');
   try {
@@ -57,7 +80,7 @@ export default async function handler(req, res) {
     if (!slug) return res.status(400).send('Missing property slug');
 
     const records = await getPublishedProperties();
-    const record = records.find(r => propertySlug(r.fields || {}, r.id) === slug);
+    const record = findProperty(records, slug);
     if (!record) return res.status(404).send('Property not found');
 
     const photos = Array.isArray(record.fields?.['Fotók'])
