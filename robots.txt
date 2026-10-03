@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /api/property-image
 Disallow: /api/
 
 Sitemap: https://www.dabasingatlan.hu/sitemap.xml
