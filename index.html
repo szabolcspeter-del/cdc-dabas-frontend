@@ -388,14 +388,19 @@ loadProperties();
 <style>
 /* Desktop hero finomhangolás – mobilhoz nem nyúl */
 @media (min-width:851px){
+  /* Desktop hero – kiegyensúlyozott, középre komponált elrendezés */
   .hero .wrap{
-    padding-top:28px;
-    padding-bottom:28px;
-    grid-template-columns:1.06fr .94fr;
-    gap:34px;
+    min-height:700px;
+    box-sizing:border-box;
+    padding:34px 22px;
+    grid-template-columns:1.04fr .96fr;
+    gap:38px;
     align-items:center;
   }
-  .hero h1{font-size:50px;line-height:1.02;margin:13px 0 14px;max-width:680px}
+  .hero .wrap > div:first-child{
+    align-self:center;
+  }
+  .hero h1{font-size:50px;line-height:1.02;margin:13px 0 16px;max-width:680px}
   .hero p{font-size:17px;line-height:1.55;max-width:690px}
   .actions{margin-top:24px}
   .search{padding:20px;border-radius:18px}
