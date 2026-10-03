@@ -46,6 +46,13 @@ section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{fon
 .spec-label{color:#303b37}
 .spec-value{font-weight:800;color:var(--ink)}
 .spec-value.empty{color:#aab2bb;font-weight:600}
+
+@media (min-width: 851px){
+  /* Desktop-only: unified contact media panel */
+  .contact{align-items:stretch;}
+  .contact-media{height:100%;min-height:0;align-self:stretch;}
+  .contact-media img,.contact-map{height:100%;min-height:0;box-sizing:border-box;}
+}
 @media(max-width:700px){
   .spec-grid{grid-template-columns:1fr;padding:8px 18px 20px}
   .spec-item:nth-child(odd){padding-right:0;border-right:0}
