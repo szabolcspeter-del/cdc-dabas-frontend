@@ -208,7 +208,7 @@ function injectMeta(html, p, url, slug) {
     name: title,
     url,
     description,
-    image: p.photos || [],
+    image: p.photo ? [`${ORIGIN}/api/property-image?slug=${encodeURIComponent(slug)}`] : [],
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     offers: {
       '@type': 'Offer',
