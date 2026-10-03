@@ -218,6 +218,9 @@ document.addEventListener("click",e=>{
 document.getElementById("cards").addEventListener("click",e=>{
   const link=e.target.closest("[data-property-id]");
   if(!link)return;
+  // A valódi href megmarad a Google és a megnyitás új lapon számára.
+  // Normál kattintásnál továbbra is a meglévő modal nyílik meg.
+  if(e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || link.target==="_blank")return;
   e.preventDefault();
   const id=link.getAttribute("data-property-id");
   openMById(id);
