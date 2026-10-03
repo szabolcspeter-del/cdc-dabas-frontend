@@ -119,10 +119,14 @@ async function getIndexTemplate() {
   return response.text();
 }
 
+function slugFromUrl(url) {
+  return String(url).split('/').filter(Boolean).pop() || '';
+}
+
 function injectMeta(html, p, url) {
   const title = makeTitle(p);
   const description = makeDescription(p);
-  const image = p.photo || `${ORIGIN}/icon-512.png`;
+  const image = p.photo ? `${ORIGIN}/api/property-image?slug=${encodeURIComponent(slugFromUrl(url))}` : `${ORIGIN}/icon-512.png`;
 
   const replacements = [
     [/<title>[^<]*<\/title>/i, `<title>${escHtml(title)}</title>`],
