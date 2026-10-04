@@ -88,6 +88,224 @@ section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{fon
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#12372f">
+<style>
+
+/* CDC DABAS – kapcsolatfelvételi űrlap */
+.cdc-contact-form-section {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 54px;
+  padding: 0 20px 70px;
+}
+.cdc-contact-form-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.cdc-contact-form-heading {
+  margin-bottom: 24px;
+}
+.cdc-contact-form-eyebrow {
+  margin-bottom: 9px;
+  color: #b99752;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+.cdc-contact-form-heading h2 {
+  margin: 0 0 10px;
+  color: #17362e;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  line-height: 1.08;
+  font-weight: 700;
+}
+.cdc-contact-form-heading p {
+  max-width: 760px;
+  margin: 0;
+  color: #69756f;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.cdc-contact-form {
+  box-sizing: border-box;
+  padding: 26px;
+  background: #fff;
+  border: 1px solid #e7e1d5;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.035);
+}
+.cdc-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.cdc-contact-field-full {
+  grid-column: 1 / -1;
+}
+.cdc-contact-field label {
+  display: block;
+  margin: 0 0 6px;
+  color: #17362e;
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 800;
+}
+.cdc-contact-field label span {
+  color: #b38a36;
+}
+.cdc-contact-field input,
+.cdc-contact-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd7ca;
+  border-radius: 10px;
+  background: #fcfbf8;
+  color: #17362e;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.45;
+  outline: none;
+}
+.cdc-contact-field input {
+  min-height: 45px;
+  padding: 11px 13px;
+}
+.cdc-contact-field textarea {
+  min-height: 125px;
+  padding: 12px 13px;
+  resize: vertical;
+}
+.cdc-contact-field input:focus,
+.cdc-contact-field textarea:focus {
+  border-color: #c9a253;
+  box-shadow: 0 0 0 3px rgba(201,162,83,.12);
+}
+.cdc-contact-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 18px;
+}
+.cdc-contact-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 700px;
+  color: #69756f;
+  font-size: 11px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.cdc-contact-consent input {
+  width: 16px;
+  height: 16px;
+  margin: 1px 0 0;
+  flex: 0 0 auto;
+  accent-color: #b99752;
+}
+.cdc-contact-submit {
+  min-height: 45px;
+  border: 0;
+  border-radius: 9px;
+  padding: 11px 22px;
+  background: #c9a253;
+  color: #17362e;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.cdc-contact-submit:hover {
+  transform: translateY(-1px);
+}
+.cdc-contact-submit:disabled {
+  opacity: .65;
+  cursor: wait;
+  transform: none;
+}
+.cdc-contact-note {
+  margin-top: 12px;
+  color: #8b928e;
+  font-size: 11px;
+  text-align: right;
+}
+.cdc-contact-status {
+  display: none;
+  margin-top: 15px;
+  padding: 11px 13px;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.cdc-contact-status.is-visible {
+  display: block;
+}
+.cdc-contact-status.is-success {
+  color: #245c45;
+  background: #edf7f0;
+  border: 1px solid #cde8d5;
+}
+.cdc-contact-status.is-error {
+  color: #8a3e32;
+  background: #fbefec;
+  border: 1px solid #eed0c9;
+}
+
+@media (max-width: 700px) {
+  .cdc-contact-form-section {
+    margin-top: 40px;
+    padding: 0 20px 50px;
+  }
+  .cdc-contact-form-heading {
+    margin-bottom: 19px;
+  }
+  .cdc-contact-form-heading h2 {
+    font-size: 27px;
+  }
+  .cdc-contact-form-heading p {
+    font-size: 13px;
+  }
+  .cdc-contact-form {
+    padding: 18px;
+    border-radius: 15px;
+  }
+  .cdc-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+  .cdc-contact-field-full {
+    grid-column: auto;
+  }
+  .cdc-contact-field input {
+    min-height: 46px;
+    font-size: 16px;
+  }
+  .cdc-contact-field textarea {
+    min-height: 145px;
+    font-size: 16px;
+  }
+  .cdc-contact-bottom {
+    display: block;
+    margin-top: 15px;
+  }
+  .cdc-contact-consent {
+    margin-bottom: 14px;
+  }
+  .cdc-contact-submit {
+    width: 100%;
+    min-height: 48px;
+    font-size: 15px;
+  }
+  .cdc-contact-note {
+    text-align: center;
+  }
+}
+
+</style>
 </head>
 <body>
 <div class="top"><div><span>CDC Dabas Ingatlaniroda</span><span>2370 Dabas, Bartók Béla út 47. · +36 70 977 7820</span></div></div>
@@ -392,6 +610,139 @@ async function loadProperties(){
 }
 loadProperties();
 </script>
+
+<!-- CDC CONTACT FORM START -->
+<section class="cdc-contact-form-section" aria-labelledby="cdc-contact-form-title">
+  <div class="cdc-contact-form-inner">
+    <div class="cdc-contact-form-heading">
+      <div class="cdc-contact-form-eyebrow">KAPCSOLATFELVÉTEL</div>
+      <h2 id="cdc-contact-form-title">Írjon nekünk!</h2>
+      <p>Kérdése van egy ingatlannal kapcsolatban, vagy szeretné, ha felvennénk Önnel a kapcsolatot? Küldje el üzenetét, és hamarosan jelentkezünk.</p>
+    </div>
+
+    <form id="cdcContactForm" class="cdc-contact-form" novalidate>
+      <div class="cdc-contact-grid">
+        <div class="cdc-contact-field">
+          <label for="cdcContactName">Név <span>*</span></label>
+          <input id="cdcContactName" name="name" type="text" autocomplete="name" placeholder="Az Ön neve" required>
+        </div>
+
+        <div class="cdc-contact-field">
+          <label for="cdcContactEmail">E-mail cím <span>*</span></label>
+          <input id="cdcContactEmail" name="email" type="email" autocomplete="email" placeholder="email@pelda.hu" required>
+        </div>
+
+        <div class="cdc-contact-field">
+          <label for="cdcContactPhone">Telefonszám</label>
+          <input id="cdcContactPhone" name="phone" type="tel" autocomplete="tel" placeholder="+36 30 123 4567">
+        </div>
+
+        <div class="cdc-contact-field">
+          <label for="cdcContactSubject">Ingatlan / tárgy</label>
+          <input id="cdcContactSubject" name="subject" type="text" placeholder="Pl. eladó ingatlan, érdeklődés...">
+        </div>
+
+        <div class="cdc-contact-field cdc-contact-field-full">
+          <label for="cdcContactMessage">Üzenet <span>*</span></label>
+          <textarea id="cdcContactMessage" name="message" placeholder="Írja le röviden, miben segíthetünk..." required></textarea>
+        </div>
+      </div>
+
+      <div class="cdc-contact-bottom">
+        <label class="cdc-contact-consent">
+          <input id="cdcContactConsent" name="consent" type="checkbox" required>
+          <span>Elolvastam és elfogadom az adatkezelési tájékoztatót.</span>
+        </label>
+
+        <button type="submit" class="cdc-contact-submit">Üzenet küldése <span aria-hidden="true">→</span></button>
+      </div>
+
+      <div class="cdc-contact-note">A csillaggal jelölt mezők kitöltése kötelező.</div>
+      <div id="cdcContactStatus" class="cdc-contact-status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+<!-- CDC CONTACT FORM END -->
+
+
+<script>
+(function () {
+  const form = document.getElementById("cdcContactForm");
+  const status = document.getElementById("cdcContactStatus");
+
+  if (!form || !status) return;
+
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    if (!form.reportValidity()) return;
+
+    const submit = form.querySelector(".cdc-contact-submit");
+    const data = new FormData(form);
+
+    submit.disabled = true;
+    submit.textContent = "Küldés…";
+    status.className = "cdc-contact-status";
+    status.textContent = "";
+
+    try {
+      const response = await fetch("https://cdc-dabas-email-api.vercel.app/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          to: "info@dabasingatlan.hu",
+          subject: data.get("subject")
+            ? "Weboldali érdeklődés – " + data.get("subject")
+            : "Weboldali kapcsolatfelvétel – CDC Dabas",
+          text:
+            "Név: " + data.get("name") + "\n" +
+            "E-mail: " + data.get("email") + "\n" +
+            "Telefon: " + (data.get("phone") || "-") + "\n" +
+            "Ingatlan / tárgy: " + (data.get("subject") || "-") + "\n\n" +
+            "Üzenet:\n" + data.get("message"),
+          html:
+            "<h2>Weboldali kapcsolatfelvétel</h2>" +
+            "<p><strong>Név:</strong> " + escapeHtml(data.get("name")) + "</p>" +
+            "<p><strong>E-mail:</strong> " + escapeHtml(data.get("email")) + "</p>" +
+            "<p><strong>Telefon:</strong> " + escapeHtml(data.get("phone") || "-") + "</p>" +
+            "<p><strong>Ingatlan / tárgy:</strong> " + escapeHtml(data.get("subject") || "-") + "</p>" +
+            "<p><strong>Üzenet:</strong><br>" +
+            escapeHtml(data.get("message")).replace(/\n/g, "<br>") +
+            "</p>"
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Az üzenet küldése nem sikerült.");
+      }
+
+      status.className = "cdc-contact-status is-visible is-success";
+      status.textContent = "Köszönjük megkeresését! Üzenetét sikeresen elküldtük, hamarosan jelentkezünk.";
+      form.reset();
+    } catch (error) {
+      status.className = "cdc-contact-status is-visible is-error";
+      status.textContent = "Az üzenet küldése nem sikerült. Kérjük, próbálja meg később, vagy hívjon bennünket telefonon.";
+    } finally {
+      submit.disabled = false;
+      submit.innerHTML = 'Üzenet küldése <span aria-hidden="true">→</span>';
+    }
+  });
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+})();
+</script>
+
 </body>
 </html>
 <style>
