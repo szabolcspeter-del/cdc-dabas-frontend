@@ -433,7 +433,21 @@ function renderDetail(){
   const badges=[p.isNew?'<span class="badge new">ÚJ</span>':'',p.exclusive?'<span class="badge exclusive">KIZÁRÓLAGOS</span>':''].filter(Boolean).join(' ');
   const plan=p.floorplan?`<div class="detail-section"><h3>Alaprajz</h3><img class="plan" src="${safeUrl(p.floorplan)}" alt="Az ingatlan alaprajza"></div>`:"";
   const map=p.map?`<a class="btn map-link" href="${escapeHtml(p.map)}" target="_blank" rel="noopener">📍 Megnyitás térképen</a>`:"";
-  document.getElementById("mc").innerHTML=`<div class="detail-gallery">${gallery(p)}</div><div class="detail-content"><nav class="breadcrumb" aria-label="Morzsamenü"><a href="/" onclick="closeM();return false;">Főoldal</a><span aria-hidden="true">›</span><a href="/#ingatlanok" onclick="closeM();return false;">Ingatlanok</a><span aria-hidden="true">›</span><span>${escapeHtml(`${p.deal||"Ingatlan"} ${p.type||p.title||"Ingatlan"} ${p.city||""}`.replace(/\s+/g," ").trim())}</span></nav><div class="eyebrow" style="color:var(--gold)">${escapeHtml(p.deal)} · ${escapeHtml(p.type)} ${badges}</div><div class="detail-top"><div><h2>${escapeHtml(p.title)}</h2><div class="detail-meta">${escapeHtml(p.city)}${p.address?` · ${escapeHtml(p.address)}`:""}${p.code?` · ${escapeHtml(p.code)}`:""}</div></div><div class="detail-price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div></div>${detailStats(p)}${detailSpecs(p)}<div class="detail-section"><h3>Az ingatlanról</h3><div class="description">${escapeHtml(p.description||"További részletek hamarosan.")}</div></div>${plan}<div class="detail-actions">${map}<a class="btn interest" href="#kapcsolat" onclick="closeM()">Érdekel az ingatlan</a></div></div>`;
+  document.getElementById("mc").innerHTML=`<div class="detail-gallery">${gallery(p)}</div><div class="detail-content"><nav class="breadcrumb" aria-label="Morzsamenü"><a href="/" onclick="closeM();return false;">Főoldal</a><span aria-hidden="true">›</span><a href="/#ingatlanok" onclick="closeM();return false;">Ingatlanok</a><span aria-hidden="true">›</span><span>${escapeHtml(`${p.deal||"Ingatlan"} ${p.type||p.title||"Ingatlan"} ${p.city||""}`.replace(/\s+/g," ").trim())}</span></nav><div class="eyebrow" style="color:var(--gold)">${escapeHtml(p.deal)} · ${escapeHtml(p.type)} ${badges}</div><div class="detail-top"><div><h2>${escapeHtml(p.title)}</h2><div class="detail-meta">${escapeHtml(p.city)}${p.address?` · ${escapeHtml(p.address)}`:""}${p.code?` · ${escapeHtml(p.code)}`:""}</div></div><div class="detail-price">${F(p.price)}${p.deal==="Kiadó"?"/hó":""}</div></div>${detailStats(p)}${detailSpecs(p)}<div class="detail-section"><h3>Az ingatlanról</h3><div class="description">${escapeHtml(p.description||"További részletek hamarosan.")}</div></div>${plan}<div class="detail-actions">${map}<a class="btn interest" href="#cdc-contact-form" onclick="interestInProperty(currentDetail); return false;">Érdekel az ingatlan</a></div></div>`;
+}
+function interestInProperty(p){
+  if(!p)return;
+  const subject=document.getElementById("cdcContactSubject");
+  const label=String(p.label||"").trim();
+  const city=String(p.city||"").trim();
+  const price=F(p.price);
+  const parts=[label,city,price].filter(Boolean);
+  if(subject)subject.value="Érdeklődés – "+parts.join(" – ");
+  closeM();
+  requestAnimationFrame(()=>{
+    const target=document.getElementById("cdc-contact-form");
+    if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+  });
 }
 function setPhoto(i){currentPhoto=i;renderDetail()}
 function changePhoto(delta){const n=(currentDetail?.photos||[]).length;if(!n)return;currentPhoto=(currentPhoto+delta+n)%n;renderDetail()}

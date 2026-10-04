@@ -85,6 +85,7 @@ export default async function handler(req, res) {
           exclusive: f['Kizárólagos'] === true || f['KIZÁRÓLAGOS'] === true || f['Kizárólagos ingatlan'] === true,
           address: f['Cím'] || '',
           code: f['Ingatlan kód'] || '',
+          label: f['Label'] ?? '',
           extra: {
             "Ingatlan állapota": f['Ingatlan állapota'],
             "Építés éve": f['Építés éve'],
