@@ -407,7 +407,23 @@ function resetSeo(){
 function openMById(id){
   const p=P.find(x=>x.id===id);
   if(!p)return;
-  currentDetail=p; currentPhoto=0; updateSeoForProperty(p); renderDetail(); document.getElementById("modal").classList.add("open"); document.body.style.overflow="hidden";
+
+  currentDetail=p;
+  currentPhoto=0;
+  updateSeoForProperty(p);
+  renderDetail();
+
+  const modal=document.getElementById("modal");
+  modal.classList.add("open");
+  document.body.style.overflow="hidden";
+
+  // Minden új ingatlan adatlap mindig a saját tetejéről induljon.
+  requestAnimationFrame(()=>{
+    modal.scrollTop=0;
+    const box=modal.querySelector(".modalbox");
+    if(box)box.scrollTop=0;
+  });
+
   try{history.replaceState({propertyId:p.id},"",propertyPath(p));}catch(_){}
   trackPropertyView(p.id);
 }
