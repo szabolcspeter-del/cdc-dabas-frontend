@@ -163,7 +163,7 @@ section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{fon
 
 <section class="band" id="kapcsolat"><div class="contact"><div class="contactbox"><div class="eyebrow" style="color:var(--gold)">Kapcsolat</div><h2>Beszéljünk az ingatlanról.</h2><p class="contact-intro">Kérdés vagy ingatlanértékesítési szándék esetén keressen minket telefonon vagy e-mailben. Szívesen segítünk az ingatlan kiválasztásában, megtekintésében és az adásvétel teljes folyamatában.</p><h3>Péter-Kovács Ildikó</h3><p><strong>ügyvezető-tulajdonos</strong></p><div class="contact-details"><p>📍 2370 Dabas, Bartók Béla út 47.</p><p>📱 <a href="tel:+36709777820">+36 70 977 7820</a></p><p>✉ <a href="mailto:ildi.kovacs@cdci.hu">ildi.kovacs@cdci.hu</a></p><p>🕘 H–P 9:00–18:00 · Szo 9:00–12:00</p></div><div class="contact-actions"><a class="btn gold" href="tel:+36709777820">📞 Telefonálok</a><a class="btn light" style="background:#fff;color:var(--g);border:1px solid var(--g)" href="mailto:ildi.kovacs@cdci.hu">✉ E-mailt írok</a></div></div><div class="contact-media"><img src="assets/iroda-kulso.png" alt="A CDC Dabas Ingatlaniroda külső bejárata"><iframe class="contact-map" title="CDC Dabas Ingatlaniroda térkép" loading="lazy" src="https://www.google.com/maps?q=Bart%C3%B3k+B%C3%A9la+%C3%BAt+47%2C+2370+Dabas&output=embed"></iframe><div class="contact-why"><div class="eyebrow">Miért a CDC Dabas?</div><div class="why-items"><div><span class="why-icon">⌖</span><strong>Helyi ismeret</strong><span>Ismerjük Dabast és a környék ingatlanpiacát.</span></div><div><span class="why-icon">♙</span><strong>Személyes figyelem</strong><span>Nálunk nem egy ügyfélszám vagy.</span></div><div><span class="why-icon">↔</span><strong>Végig melletted vagyunk</strong><span>A kereséstől az adásvételig.</span></div></div><div class="why-claim">Az Ön ingatlana. A mi figyelmünk.</div></div></div></div></section>
 <!-- CDC CONTACT FORM START -->
-<section class="cdc-contact-form-section" aria-labelledby="cdc-contact-form-title">
+<section id="cdc-contact-form" class="cdc-contact-form-section" aria-labelledby="cdc-contact-form-title">
   <div class="cdc-contact-form-inner">
     <div class="cdc-contact-form-heading">
       <div class="cdc-contact-form-eyebrow">KAPCSOLATFELVÉTEL</div>
@@ -437,17 +437,37 @@ function renderDetail(){
 }
 function interestInProperty(p){
   if(!p)return;
+
   const subject=document.getElementById("cdcContactSubject");
   const label=String(p.label||"").trim();
   const city=String(p.city||"").trim();
   const price=F(p.price);
   const parts=[label,city,price].filter(Boolean);
   if(subject)subject.value="Érdeklődés – "+parts.join(" – ");
-  closeM();
-  requestAnimationFrame(()=>{
+
+  // A modalt ténylegesen zárjuk be, majd a böngésző natív anchor-kezelésével
+  // közvetlenül az új kapcsolatfelvételi űrlaphoz ugrunk.
+  const modal=document.getElementById("modal");
+  if(modal)modal.classList.remove("open");
+  document.body.style.overflow="";
+
+  try{history.replaceState({},"","/");}catch(_){}
+
+  setTimeout(()=>{
     const target=document.getElementById("cdc-contact-form");
-    if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
-  });
+    if(!target)return;
+
+    // Natív hash-ugrás + pontos pozicionálás.
+    window.location.hash="cdc-contact-form";
+    target.scrollIntoView({behavior:"auto",block:"start"});
+
+    // A hash-ugrás után még egyszer ráállunk az űrlapra,
+    // így fixed/sticky fejléc mellett sem marad feljebb.
+    setTimeout(()=>{
+      const t=document.getElementById("cdc-contact-form");
+      if(t)t.scrollIntoView({behavior:"smooth",block:"start"});
+    },50);
+  },120);
 }
 function setPhoto(i){currentPhoto=i;renderDetail()}
 function changePhoto(delta){const n=(currentDetail?.photos||[]).length;if(!n)return;currentPhoto=(currentPhoto+delta+n)%n;renderDetail()}
