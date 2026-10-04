@@ -12,22 +12,31 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}?pageSize=100`;
-    const response = await fetch(url, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const records = [];
+    let offset = '';
 
-    const data = await response.json();
-    if (!response.ok) {
-      return res.status(response.status).json({
-        error: 'Airtable request failed',
-        airtable: data?.error || null,
-        message: data?.error?.message || 'Unknown Airtable error',
-        status: response.status
+    do {
+      const params = new URLSearchParams({ pageSize: '100' });
+      if (offset) params.set('offset', offset);
+
+      const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}?${params.toString()}`;
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-    }
 
-    const records = data.records || [];
+      const data = await response.json();
+      if (!response.ok) {
+        return res.status(response.status).json({
+          error: 'Airtable request failed',
+          airtable: data?.error || null,
+          message: data?.error?.message || 'Unknown Airtable error',
+          status: response.status
+        });
+      }
+
+      records.push(...(data.records || []));
+      offset = data.offset || '';
+    } while (offset);
     const properties = records
       .filter(record => {
         const f = record.fields || {};
