@@ -21,7 +21,7 @@ function localizedDeal(value, lang) {
 }
 
 function localizedType(value, lang) {
-  const maps = { en: {Ház:'House',Lakás:'Apartment',Telek:'Plot',Iroda:'Office',Üzlethelyiség:'Commercial unit',Garázs:'Garage',Mezőgazdasági:'Agricultural',Ipari:'Industrial',Egyéb:'Other'}, de: {Ház:'Haus',Lakás:'Wohnung',Telek:'Grundstück',Iroda:'Büro',Üzlethelyiség:'Gewerbeeinheit',Garázs:'Garage',Mezőgazdasági:'Landwirtschaftlich',Ipari:'Gewerbe/Industrie',Egyéb:'Sonstige'} };
+  const maps = { en:{'Családi ház':'Family house','Lakás':'Apartment','Iroda':'Office','Telek':'Plot','Üzlethelyiség':'Commercial unit','Egyéb':'Other','Tégla lakás':'Brick-built apartment','Panel lakás':'Panel apartment','Ikerház':'Semi-detached house','Ipari terület':'Industrial area','Sorház':'Terraced house','Ipari telephely':'Industrial site','Raktár':'Warehouse','Tanya':'Farmhouse','Mezőgazdasági terület':'Agricultural land'}, de:{'Családi ház':'Einfamilienhaus','Lakás':'Wohnung','Iroda':'Büro','Telek':'Grundstück','Üzlethelyiség':'Geschäftsräume','Egyéb':'Sonstige','Tégla lakás':'Massivbauwohnung','Panel lakás':'Plattenbauwohnung','Ikerház':'Doppelhaushälfte','Ipari terület':'Industriefläche','Sorház':'Reihenhaus','Ipari telephely':'Industriebetrieb','Raktár':'Lagerhalle','Tanya':'Bauernhof','Mezőgazdasági terület':'Landwirtschaftliche Fläche'} };
   return maps[lang]?.[value] || value;
 }
 
