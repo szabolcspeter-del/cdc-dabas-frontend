@@ -9,8 +9,32 @@
       "destination": "/api/property-image?slug=:slug"
     },
     {
+      "source": "/en/ingatlan/:slug",
+      "destination": "/api/property-page?slug=:slug&lang=en"
+    },
+    {
+      "source": "/de/ingatlan/:slug",
+      "destination": "/api/property-page?slug=:slug&lang=de"
+    },
+    {
+      "source": "/en",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/de",
+      "destination": "/de/index.html"
+    },
+    {
+      "source": "/de/",
+      "destination": "/de/index.html"
+    },
+    {
       "source": "/ingatlan/:slug",
-      "destination": "/api/property-page?slug=:slug"
+      "destination": "/api/property-page?slug=:slug&lang=hu"
     }
   ],
   "headers": [

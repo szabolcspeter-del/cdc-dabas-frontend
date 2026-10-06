@@ -76,6 +76,8 @@ export default async function handler(req, res) {
           rooms: Number(f['Szobák száma'] || 0),
           bathrooms: Number(f['Fürdőszobák száma'] || 0),
           description: f['Leírás'] || '',
+          descriptionEn: f['Leírás EN'] || '',
+          descriptionDe: f['Leírás DE'] || '',
           photos,
           photo: photos[0] || null,
           floorplan,

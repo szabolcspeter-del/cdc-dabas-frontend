@@ -63,6 +63,8 @@ export default async function handler(req, res) {
 
     const urls = [
       { loc: `${origin}/`, priority: '1.0', changefreq: 'daily' },
+      { loc: `${origin}/en/`, priority: '0.9', changefreq: 'daily' },
+      { loc: `${origin}/de/`, priority: '0.9', changefreq: 'daily' },
     ];
 
     for (const record of records) {
@@ -78,12 +80,15 @@ export default async function handler(req, res) {
         if (!Number.isNaN(d.getTime())) lastmod = d.toISOString();
       }
 
-      urls.push({
-        loc: `${origin}/ingatlan/${propertySlug(f, record.id)}`,
-        lastmod,
-        priority: '0.8',
-        changefreq: 'weekly',
-      });
+      const slug = propertySlug(f, record.id);
+      for (const lang of ['', 'en/', 'de/']) {
+        urls.push({
+          loc: `${origin}/${lang}ingatlan/${slug}`,
+          lastmod,
+          priority: '0.8',
+          changefreq: 'weekly',
+        });
+      }
     }
 
     const body = [

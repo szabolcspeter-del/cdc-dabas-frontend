@@ -1,5 +1,30 @@
 const ORIGIN = 'https://www.dabasingatlan.hu';
 
+function getLang(req) {
+  const q = String(req.query?.lang || '').toLowerCase();
+  if (q === 'en' || q === 'de') return q;
+  const candidates = [req.url, req.headers?.['x-forwarded-uri'], req.headers?.['x-vercel-original-url']].filter(Boolean).join(' ');
+  const m = candidates.match(/\/(en|de)(?:\/|$)/i);
+  return (m?.[1] || 'hu').toLowerCase();
+}
+
+const LANG_TEXT = {
+  hu: { dealSale:'Eladó', dealRent:'Kiadó', fallback:'Eladó és kiadó ingatlanok Dabas és környékén.', titleSuffix:'CDC Dabas Ingatlaniroda', home:'Főoldal', properties:'Ingatlanok' },
+  en: { dealSale:'For sale', dealRent:'For rent', fallback:'Properties for sale and rent in Dabas and the surrounding area.', titleSuffix:'CDC Dabas Real Estate', home:'Home', properties:'Properties' },
+  de: { dealSale:'Zu verkaufen', dealRent:'Zu vermieten', fallback:'Immobilien zum Verkauf und zur Miete in Dabas und Umgebung.', titleSuffix:'CDC Dabas Immobilien', home:'Startseite', properties:'Immobilien' }
+};
+
+function localizedDeal(value, lang) {
+  if (lang === 'en') return value === 'Eladó' ? 'For sale' : value === 'Kiadó' ? 'For rent' : value;
+  if (lang === 'de') return value === 'Eladó' ? 'Zu verkaufen' : value === 'Kiadó' ? 'Zu vermieten' : value;
+  return value;
+}
+
+function localizedType(value, lang) {
+  const maps = { en: {Ház:'House',Lakás:'Apartment',Telek:'Plot',Iroda:'Office',Üzlethelyiség:'Commercial unit',Garázs:'Garage',Mezőgazdasági:'Agricultural',Ipari:'Industrial',Egyéb:'Other'}, de: {Ház:'Haus',Lakás:'Wohnung',Telek:'Grundstück',Iroda:'Büro',Üzlethelyiség:'Gewerbeeinheit',Garázs:'Garage',Mezőgazdasági:'Landwirtschaftlich',Ipari:'Gewerbe/Industrie',Egyéb:'Sonstige'} };
+  return maps[lang]?.[value] || value;
+}
+
 function escHtml(value = '') {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -56,6 +81,8 @@ function mapProperty(record) {
     price: Number(f['Ár'] || 0),
     area: Number(f['Alapterület'] ?? f['Négyzetméter'] ?? f['Alapterület (m²)'] ?? 0),
     description: cleanText(f['Leírás'] || ''),
+    descriptionEn: cleanText(f['Leírás EN'] || ''),
+    descriptionDe: cleanText(f['Leírás DE'] || ''),
     photos,
     photo: photos[0] || null,
   };
@@ -66,14 +93,15 @@ function formatPrice(price) {
   return new Intl.NumberFormat('hu-HU').format(price);
 }
 
-function makeTitle(p) {
-  const deal = p.deal || 'Ingatlan';
-  const type = p.type || p.title || 'ingatlan';
-  const city = p.city || 'Dabas és környéke';
-  return `${deal} ${type} ${city} | CDC Dabas Ingatlaniroda`;
+function makeTitle(p, lang = 'hu') {
+  const tx = LANG_TEXT[lang] || LANG_TEXT.hu;
+  const deal = localizedDeal(p.deal || 'Ingatlan', lang);
+  const type = localizedType(p.type || p.title || 'Immobilie', lang);
+  const city = p.city || 'Dabas';
+  return `${deal} ${type} ${city} | ${tx.titleSuffix}`;
 }
 
-function makeDescription(p) {
+function makeDescription(p, lang = 'hu') {
   const fallbackParts = [
     p.deal ? `${p.deal} ${p.type || 'ingatlan'}` : (p.type || 'Ingatlan'),
     p.city ? `${p.city} területén` : 'Dabas és környékén',
@@ -81,7 +109,8 @@ function makeDescription(p) {
     p.area ? `${p.area} m²` : ''
   ].filter(Boolean).join(' · ');
 
-  return truncate(p.description || fallbackParts || 'Eladó és kiadó ingatlanok Dabas és környékén.', 200);
+  const localized = lang === 'en' ? p.descriptionEn : lang === 'de' ? p.descriptionDe : p.description;
+  return truncate(localized || p.description || fallbackParts || LANG_TEXT[lang].fallback, 200);
 }
 
 async function getPublishedProperties() {
@@ -175,12 +204,14 @@ async function getIndexTemplate() {
   return response.text();
 }
 
-function injectMeta(html, p, url, slug) {
-  const title = makeTitle(p);
-  const description = makeDescription(p);
+function injectMeta(html, p, url, slug, lang = 'hu') {
+  const title = makeTitle(p, lang);
+  const description = makeDescription(p, lang);
+  const prefix = lang === 'hu' ? '' : `/${lang}`;
   const image = p.photo
     ? `${ORIGIN}/ingatlan-kepek/${encodeURIComponent(slug)}.jpg`
     : `${ORIGIN}/icon-512.png`;
+  const localizedUrl = `${ORIGIN}${prefix}/ingatlan/${encodeURIComponent(slug)}`;
 
   const replacements = [
     [/<title>[^<]*<\/title>/i, `<title>${escHtml(title)}</title>`],
@@ -197,16 +228,21 @@ function injectMeta(html, p, url, slug) {
   let result = html;
   for (const [pattern, replacement] of replacements) result = result.replace(pattern, replacement);
 
-  const canonical = `<link rel="canonical" href="${escHtml(url)}">`;
+  const canonical = `<link rel="canonical" href="${escHtml(localizedUrl)}">`;
   result = result.replace(/<link\s+rel="canonical"[^>]*>/i, canonical);
   if (!/<link\s+rel="canonical"[^>]*>/i.test(result)) result = result.replace(/<\/head>/i, `${canonical}\n</head>`);
+  result = result.replace(/<link\s+rel="alternate"[^>]*>/gi, '');
+  const baseSlug = encodeURIComponent(slug);
+  const hreflangs = [['hu', `${ORIGIN}/ingatlan/${baseSlug}`], ['en', `${ORIGIN}/en/ingatlan/${baseSlug}`], ['de', `${ORIGIN}/de/ingatlan/${baseSlug}`], ['x-default', `${ORIGIN}/ingatlan/${baseSlug}`]].map(([l,u]) => `<link rel="alternate" hreflang="${l}" href="${escHtml(u)}">`).join('\n');
+  result = result.replace(/<\/head>/i, `${hreflangs}\n</head>`);
+  result = result.replace(/<html([^>]*)>/i, (m, attrs) => `<html${attrs.replace(/\slang=\"[^\"]*\"/i,'')} lang="${lang}">`);
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'RealEstateListing',
-    '@id': `${url}#listing`,
+    '@id': `${localizedUrl}#listing`,
     name: title,
-    url,
+    url: localizedUrl,
     description,
     image: p.photo ? [`${ORIGIN}/ingatlan-kepek/${encodeURIComponent(slug)}.jpg`] : [],
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
@@ -231,14 +267,14 @@ function injectMeta(html, p, url, slug) {
     };
   }
 
-  const breadcrumbName = cleanText(`${p.deal || 'Ingatlan'} ${p.type || p.title || 'Ingatlan'} ${p.city || ''}`);
+  const breadcrumbName = cleanText(`${localizedDeal(p.deal || 'Ingatlan', lang)} ${localizedType(p.type || p.title || 'Immobilie', lang)} ${p.city || ''}`);
   const breadcrumb = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Főoldal', item: `${ORIGIN}/` },
-      { '@type': 'ListItem', position: 2, name: 'Ingatlanok', item: `${ORIGIN}/#ingatlanok` },
-      { '@type': 'ListItem', position: 3, name: breadcrumbName, item: url }
+      { '@type': 'ListItem', position: 1, name: (LANG_TEXT[lang] || LANG_TEXT.hu).home, item: `${ORIGIN}${lang === 'hu' ? '/' : `/${lang}/`}` },
+      { '@type': 'ListItem', position: 2, name: (LANG_TEXT[lang] || LANG_TEXT.hu).properties, item: `${ORIGIN}${lang === 'hu' ? '/' : `/${lang}/`}#ingatlanok` },
+      { '@type': 'ListItem', position: 3, name: breadcrumbName, item: localizedUrl }
     ]
   };
 
@@ -253,6 +289,7 @@ export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).send('Method not allowed');
 
   try {
+    const lang = getLang(req);
     const slug = getRequestedSlug(req);
     if (!slug) return res.status(400).send('Missing property slug');
 
@@ -262,9 +299,9 @@ export default async function handler(req, res) {
 
     const p = mapProperty(record);
     const canonicalSlug = propertySlug(record.fields || {}, record.id);
-    const url = `${ORIGIN}/ingatlan/${encodeURIComponent(canonicalSlug)}`;
+    const url = `${ORIGIN}${lang === 'hu' ? '' : `/${lang}`}/ingatlan/${encodeURIComponent(canonicalSlug)}`;
     const template = await getIndexTemplate();
-    const html = injectMeta(template, p, url, canonicalSlug);
+    const html = injectMeta(template, p, url, canonicalSlug, lang);
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('X-Content-Type-Options', 'nosniff');
