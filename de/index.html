@@ -182,6 +182,17 @@ img, iframe, video, svg, canvas { max-width: 100% !important; }
   .profile-copy h2 { font-size: 34px; }
 }
 </style>
+<style>
+/* DE desktop: keep exactly the same 1180px content grid as HU/EN. The mobile overflow rules above must not widen desktop containers. */
+@media (min-width: 851px) {
+  .top > div, .navin, .wrap, .head, .cards, .services, .about, .contact, .pagination, .footer > div, .cdc-contact-form-inner {
+    max-width: 1180px;
+  }
+  .wrap, .head, .cards, .services, .about, .contact, .pagination, .cdc-contact-form-inner {
+    width: auto;
+  }
+}
+</style>
 </head>
 <body>
 <div class="top"><div><span>CDC Dabas Ingatlaniroda</span><span>2370 Dabas, Bartók Béla út 47. · +36 70 977 7820</span></div></div>
