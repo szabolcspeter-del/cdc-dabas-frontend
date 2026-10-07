@@ -85,7 +85,6 @@ section{padding:75px 22px}.head{max-width:1180px;margin:0 auto 30px}.head h2{fon
 }
 .lang-switch{display:flex;gap:4px;margin-left:10px;align-items:center}.lang-switch button{border:1px solid var(--line);background:#fff;color:var(--g);border-radius:999px;padding:6px 9px;font:700 12px Arial;cursor:pointer;line-height:1}.lang-switch button.active{background:var(--gold);border-color:var(--gold);color:var(--g)}.detail-lang{display:flex;justify-content:flex-end;gap:5px;margin:0 0 14px}.detail-lang button{border:1px solid var(--line);background:#fff;color:var(--g);border-radius:999px;padding:5px 9px;font:700 11px Arial;cursor:pointer}.detail-lang button.active{background:var(--g);color:#fff;border-color:var(--g)}
 
-<style>
 /* DE mobile: prevent horizontal page overflow caused by longer German text. */
 html,body{width:100%;max-width:100%;overflow-x:hidden;}
 img,iframe,video{max-width:100%;}
@@ -142,12 +141,47 @@ section,.band,.wrap,.about,.contact,.grid,.hero{max-width:100%;box-sizing:border
 .cdc-contact-submit{width:100%;min-height:48px;font-size:15px}
 .cdc-contact-note{text-align:center}
 }
-</style>
 <link rel="canonical" href="https://www.dabasingatlan.hu/de/">
 <link rel="alternate" hreflang="hu" href="https://www.dabasingatlan.hu/">
 <link rel="alternate" hreflang="en" href="https://www.dabasingatlan.hu/en/">
 <link rel="alternate" hreflang="de" href="https://www.dabasingatlan.hu/de/">
 <link rel="alternate" hreflang="x-default" href="https://www.dabasingatlan.hu/">
+<style>
+/* DE mobile overflow hardening: the German copy must never widen the viewport. */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip !important;
+  overscroll-behavior-x: none;
+}
+body { position: relative; }
+body, body * { max-width: 100%; }
+body * { min-width: 0; }
+img, iframe, video, svg, canvas { max-width: 100% !important; }
+.hero, section, .band, .nav, .footer, .navin, .wrap, .head, .cards, .services, .about, .contact, .contactbox, .contact-media, .profile-copy, .profile-photo-wrap, .cdc-contact-form-section, .cdc-contact-form-inner {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+.profile-copy, .profile-copy p, .profile-copy h2, .aboutbox, .contactbox, .contact-intro, .legal, .description, .service p, .hero p {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+@media (max-width: 560px) {
+  .navin { width: 100%; padding-left: 10px; padding-right: 10px; gap: 6px; }
+  .logo { flex: 0 1 92px; min-width: 0; font-size: 20px; }
+  .navbtn { flex: 0 1 92px; min-width: 0; max-width: 92px; padding: 10px 8px; font-size: 13px; line-height: 1.15; text-align: center; white-space: normal; overflow-wrap: anywhere; }
+  /* German CTA: keep the two-line label like HU/EN and avoid header overflow */
+  .navbtn { flex: 0 0 120px; width: 120px; max-width: 120px; }
+  .navbtn { overflow-wrap: normal; word-break: normal; }
+  .lang-switch { flex: 0 0 auto; margin-left: 0; gap: 3px; }
+  .lang-switch button { padding: 6px 7px; font-size: 11px; }
+  .hero .wrap { width: 100%; }
+  .about, .contact, .cards, .services { width: 100%; }
+  .contactbox { width: 100%; }
+  .profile-copy h2 { font-size: 34px; }
+}
+</style>
 </head>
 <body>
 <div class="top"><div><span>CDC Dabas Ingatlaniroda</span><span>2370 Dabas, Bartók Béla út 47. · +36 70 977 7820</span></div></div>
