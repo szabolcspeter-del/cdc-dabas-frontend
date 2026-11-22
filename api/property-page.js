@@ -113,30 +113,42 @@ function makeDescription(p, lang = 'hu') {
   return truncate(localized || p.description || fallbackParts || LANG_TEXT[lang].fallback, 200);
 }
 
-async function getPublishedProperties() {
+async function getPublishedProperty(slug) {
   const token = process.env.AIRTABLE_TOKEN;
   const baseId = process.env.AIRTABLE_BASE_ID || 'appBXDnRligFAIvCv';
   const table = process.env.AIRTABLE_PROPERTIES_TABLE || 'tblNJ5etsbiMWAnMZ';
   if (!token) throw new Error('AIRTABLE_TOKEN is not configured');
 
-  const records = [];
-  let offset = '';
-  do {
-    const qs = new URLSearchParams({ pageSize: '100', filterByFormula: 'AND(LOWER(TRIM({Ingatlan státusza}&""))="aktív",{Publikálva a weboldalon}=1)' });
-    if (offset) qs.set('offset', offset);
-    const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}?${qs.toString()}`;
-    const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data?.error?.message || 'Airtable request failed');
-    records.push(...(data.records || []));
-    offset = data.offset || '';
-  } while (offset);
+  const normalized = slugify(slug);
+  const dash = normalized.indexOf('-');
+  const code = dash > 0 ? normalized.slice(0, dash) : normalized;
+  let lookupFormula;
+  if (/^\\d+$/.test(code)) {
+    lookupFormula = `{Ingatlan ID}=${Number(code)}`;
+  } else {
+    const safeCode = code.replace(/'/g, "\\'");
+    lookupFormula = `LOWER(TRIM({Label}&""))='${safeCode}'`;
+  }
 
-  return records.filter(record => {
-    const f = record.fields || {};
+  const qs = new URLSearchParams({
+    pageSize: '1',
+    filterByFormula: `AND(${lookupFormula},LOWER(TRIM({Ingatlan státusza}&""))="aktív",{Publikálva a weboldalon}=1)`
+  });
+  for (const field of ["Ingatlan ID","Label","Cím","Település","Ingatlantípus","Eladó / Kiadó","Ár","Alapterület","Telekméret","Szobák száma","Fürdőszobák száma","Leírás","Leírás EN","Leírás DE","Fotók","Alaprajz","Helyszín / térkép","Kiemelt ingatlan","Kizárólagos","Állapot","Építés éve","Emelet","Épület szintjei","Lift","Komfort","Fűtés","Klíma","Fürdő és WC","Ingatlan státusza","Publikálva a weboldalon"]) {
+    qs.append('fields[]', field);
+  }
+
+  const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}?${qs.toString()}`;
+  const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data?.error?.message || 'Airtable request failed');
+
+  const record = (data.records || []).find(item => {
+    const f = item.fields || {};
     return String(f['Ingatlan státusza'] || '').trim().toLowerCase() === 'aktív'
       && f['Publikálva a weboldalon'] === true;
   });
+  return record || null;
 }
 
 function getRequestedSlug(req) {
@@ -293,8 +305,7 @@ export default async function handler(req, res) {
     const slug = getRequestedSlug(req);
     if (!slug) return res.status(400).send('Missing property slug');
 
-    const records = await getPublishedProperties();
-    const record = findProperty(records, slug);
+    const record = await getPublishedProperty(slug);
     if (!record) return res.status(404).send('Property not found');
 
     const p = mapProperty(record);
@@ -307,7 +318,7 @@ export default async function handler(req, res) {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Robots-Tag', 'index, follow');
     // Do not let an old generic homepage HTML response get stuck in a CDN cache.
-    res.setHeader('Cache-Control', 'no-store, max-age=0, must-revalidate');
+    res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
     return res.status(200).send(html);
   } catch (error) {
     console.error('Property page rendering failed:', error);
