@@ -50,6 +50,7 @@ export default async function handler(req, res) {
     // Read all Airtable pages, not just the first 100 records.
     do {
       const qs = new URLSearchParams({ pageSize: '100', filterByFormula: 'AND(LOWER(TRIM({Ingatlan státusza}&""))="aktív",{Publikálva a weboldalon}=1)' });
+      for (const field of ["Ingatlan ID", "Label", "Ingatlantípus", "Település", "Cím", "Módosítás dátuma", "Ingatlan státusza", "Publikálva a weboldalon"]) qs.append('fields[]', field);
       if (offset) qs.set('offset', offset);
       const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}?${qs.toString()}`;
       const response = await fetch(url, {
