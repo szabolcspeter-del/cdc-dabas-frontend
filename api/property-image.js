@@ -33,7 +33,8 @@ async function getPublishedProperties() {
   const records = [];
   let offset = '';
   do {
-    const qs = new URLSearchParams({ pageSize: '100' });
+    const qs = new URLSearchParams({ pageSize: '100', filterByFormula: 'AND(LOWER(TRIM({Ingatlan státusza}&""))="aktív",{Publikálva a weboldalon}=1)' });
+    for (const field of ["Ingatlan ID", "Ingatlan kód", "Ingatlantípus", "Település", "Cím", "Fotók", "Ingatlan státusza", "Publikálva a weboldalon"]) qs.append('fields[]', field);
     if (offset) qs.set('offset', offset);
     const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}?${qs.toString()}`;
     const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
