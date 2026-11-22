@@ -16,7 +16,8 @@ export default async function handler(req, res) {
     let offset = '';
 
     do {
-      const params = new URLSearchParams({ pageSize: '100' });
+      const params = new URLSearchParams({ pageSize: '100', filterByFormula: 'AND(LOWER(TRIM({Ingatlan státusza}&""))="aktív",{Publikálva a weboldalon}=1)' });
+      for (const field of ["Ingatlan ID","Cím","Település","Ingatlantípus","Eladó / Kiadó","Ár","Alapterület","Négyzetméter","Alapterület (m²)","Telekméret","Szobák száma","Fürdőszobák száma","Leírás","Leírás EN","Leírás DE","Fotók","Alaprajz","Helyszín / térkép","Kiemelt ingatlan","Új","ÚJ","Új ingatlan","Kizárólagos","KIZÁRÓLAGOS","Kizárólagos ingatlan","Ingatlan kód","Label","Ingatlan állapota","Építés éve","Komfort","Emelet","Épület szintjei","Lift","Belmagasság","Légkondicionáló","Akadálymentesített","Fürdő és wc","Tájolás","Kilátás","Erkély mérete","Kertkapcsolatos","Tetőtér","Parkolás","Fűtés típusa","Pince","Tároló","Ingatlan státusza","Publikálva a weboldalon"]) params.append('fields[]', field);
       if (offset) params.set('offset', offset);
 
       const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}?${params.toString()}`;
@@ -112,6 +113,7 @@ export default async function handler(req, res) {
         };
       });
 
+    res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
     return res.status(200).json({ properties, totalRecords: records.length });
   } catch (error) {
     return res.status(500).json({
