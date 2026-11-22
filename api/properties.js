@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
     do {
       const params = new URLSearchParams({ pageSize: '100', filterByFormula: 'AND(LOWER(TRIM({Ingatlan státusza}&""))="aktív",{Publikálva a weboldalon}=1)' });
-      for (const field of ["Ingatlan ID","Cím","Település","Ingatlantípus","Eladó / Kiadó","Ár","Alapterület","Négyzetméter","Alapterület (m²)","Telekméret","Szobák száma","Fürdőszobák száma","Leírás","Leírás EN","Leírás DE","Fotók","Alaprajz","Helyszín / térkép","Kiemelt ingatlan","Új","ÚJ","Új ingatlan","Kizárólagos","KIZÁRÓLAGOS","Kizárólagos ingatlan","Ingatlan kód","Label","Ingatlan állapota","Építés éve","Komfort","Emelet","Épület szintjei","Lift","Belmagasság","Légkondicionáló","Akadálymentesített","Fürdő és wc","Tájolás","Kilátás","Erkély mérete","Kertkapcsolatos","Tetőtér","Parkolás","Fűtés típusa","Pince","Tároló","Ingatlan státusza","Publikálva a weboldalon"]) params.append('fields[]', field);
+      for (const field of ["Ingatlan ID","Label","Cím","Település","Ingatlantípus","Eladó / Kiadó","Ár","Alapterület","Telekméret","Szobák száma","Fürdőszobák száma","Leírás","Leírás EN","Leírás DE","Fotók","Alaprajz","Helyszín / térkép","Kiemelt ingatlan","Kizárólagos","Állapot","Építés éve","Emelet","Épület szintjei","Lift","Komfort","Fűtés","Klíma","Fürdő és WC","Ingatlan státusza","Publikálva a weboldalon"]) params.append('fields[]', field);
       if (offset) params.set('offset', offset);
 
       const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}?${params.toString()}`;
@@ -90,25 +90,15 @@ export default async function handler(req, res) {
           code: f['Ingatlan kód'] || '',
           label: f['Label'] ?? '',
           extra: {
-            "Ingatlan állapota": f['Ingatlan állapota'],
+            "Ingatlan állapota": f['Állapot'],
             "Építés éve": f['Építés éve'],
             "Komfort": f['Komfort'],
             "Emelet": f['Emelet'],
             "Épület szintjei": f['Épület szintjei'],
             "Lift": f['Lift'],
-            "Belmagasság": f['Belmagasság'],
-            "Légkondicionáló": f['Légkondicionáló'],
-            "Akadálymentesített": f['Akadálymentesített'],
-            "Fürdő és wc": f['Fürdő és wc'],
-            "Tájolás": f['Tájolás'],
-            "Kilátás": f['Kilátás'],
-            "Erkély mérete": f['Erkély mérete'],
-            "Kertkapcsolatos": f['Kertkapcsolatos'],
-            "Tetőtér": f['Tetőtér'],
-            "Parkolás": f['Parkolás'],
-            "Fűtés típusa": f['Fűtés típusa'],
-            "Pince": f['Pince'],
-            "Tároló": f['Tároló']
+            "Légkondicionáló": f['Klíma'],
+            "Fürdő és wc": f['Fürdő és WC'],
+            "Fűtés típusa": f['Fűtés'],
           }
         };
       });
