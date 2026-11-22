@@ -123,7 +123,7 @@ async function getPublishedProperty(slug) {
   const dash = normalized.indexOf('-');
   const code = dash > 0 ? normalized.slice(0, dash) : normalized;
   let lookupFormula;
-  if (/^\\d+$/.test(code)) {
+  if (/^\d+$/.test(code)) {
     lookupFormula = `{Ingatlan ID}=${Number(code)}`;
   } else {
     const safeCode = code.replace(/'/g, "\\'");
